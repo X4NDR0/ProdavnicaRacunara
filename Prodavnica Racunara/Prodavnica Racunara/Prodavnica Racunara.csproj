@@ -6,4 +6,10 @@
     <RootNamespace>Prodavnica_Racunara</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="data\users.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

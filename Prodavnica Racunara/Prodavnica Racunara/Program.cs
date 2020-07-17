@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Prodavnica_Racunara.Services;
 
 namespace Prodavnica_Racunara
 {
@@ -6,7 +6,8 @@ namespace Prodavnica_Racunara
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ProdavnicaRacunaraService prs = new ProdavnicaRacunaraService();
+            prs.Login();
         }
     }
 }
