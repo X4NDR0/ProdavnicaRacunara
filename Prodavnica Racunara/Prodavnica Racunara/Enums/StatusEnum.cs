@@ -6,7 +6,7 @@ namespace Prodavnica_Racunara.Enums
 {
     enum Status
     {
-        Aktivan = 1,
-        Obrisan = 2
+        Aktivan,
+        Obrisan
     }
 }

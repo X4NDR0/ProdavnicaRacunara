@@ -23,5 +23,11 @@ namespace Prodavnica_Racunara.Models
         public string Ime;
         public string Prezime;
         public AccountRole Uloga;
+
+        public string Save()
+        {
+            string data = Username + ";" + Lozinka + ";" + Ime + ";" + Prezime + ";" + Uloga.ToString();
+            return data;
+        }
     }
 }
