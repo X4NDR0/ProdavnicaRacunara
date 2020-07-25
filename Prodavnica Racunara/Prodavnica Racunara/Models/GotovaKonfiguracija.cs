@@ -13,10 +13,10 @@ namespace Prodavnica_Racunara.Models
 
         }
 
-        public GotovaKonfiguracija(string data,List<Artikal> listaArtikla)
+        public GotovaKonfiguracija(string data, List<Artikal> listaArtikla)
         {
             string[] podaci = data.Split(';');
-            int.TryParse(podaci[0], out Sifra);
+            //int.TryParse(podaci[0], out Sifra);
             Naziv = podaci[1];
             double.TryParse(podaci[2], out Cena);
             int.TryParse(podaci[3], out Kolicina);
@@ -27,11 +27,20 @@ namespace Prodavnica_Racunara.Models
 
             List<Komponenta> listaKomponenataAdd = new List<Komponenta>(); ;
 
-            for (int i = 0; i < idOfTheComponents.Length; i++)
+            for (int i = 0; i <= idOfTheComponents.Length; i++)
             {
                 Artikal komponentaLoad = listaArtikla.Where(x => x.Sifra == Convert.ToInt32(idOfTheComponents[i])).FirstOrDefault();
+
                 Komponenta komponentaConvert = komponentaLoad as Komponenta;
-                listaKomponenataAdd.Add(komponentaConvert);
+
+                if (komponentaConvert != null)
+                {
+                    listaKomponenataAdd.Add(komponentaConvert);
+                }
+                else
+                {
+                    Console.WriteLine("Error while adding component!");
+                }
             }
 
             ListaKomponenata = listaKomponenataAdd;

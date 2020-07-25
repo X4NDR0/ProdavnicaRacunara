@@ -194,8 +194,12 @@ namespace Prodavnica_Racunara.Services
                     GotovaKonfiguracija gotovaKonfiguracija = konfiguracija as GotovaKonfiguracija;
                     Console.Write("Sifra:" + konfiguracija.Sifra + "\nKolicina:" + konfiguracija.Kolicina + "\nCena:{0:0.00}" + "\nNaziv konfiguracije:" + konfiguracija.Naziv + "\nOpis konfiguracije:" + konfiguracija.Opis + "\n", konfiguracija.Cena);
 
-                    
-
+                    Console.WriteLine("=-=-=-=-=-=Komponente=-=-=-=-=-=");
+                    foreach (Komponenta komponenta in gotovaKonfiguracija.ListaKomponenata)
+                    {
+                        Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nOpis:" + komponenta.Opis + "\nCena:{0:0.00}", komponenta.Cena + "\n");
+                        Console.WriteLine("============================");
+                    }
                 }
             }
         }
@@ -1078,7 +1082,7 @@ namespace Prodavnica_Racunara.Services
 
                     case Opcije.IspisiKonfiguracijePoOpseguCena:
                         Console.Clear();
-                       // WriteConfigurationByPriceRange();
+                        // WriteConfigurationByPriceRange();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         Console.Clear();
@@ -1330,7 +1334,7 @@ namespace Prodavnica_Racunara.Services
             {
                 if (!string.IsNullOrEmpty(konfiguracija))
                 {
-                    GotovaKonfiguracija gotovaKonfiguracija = new GotovaKonfiguracija(konfiguracija,listaArtikala);
+                    GotovaKonfiguracija gotovaKonfiguracija = new GotovaKonfiguracija(konfiguracija, listaArtikala);
                     listaArtikala.Add(gotovaKonfiguracija);
                 }
             }
