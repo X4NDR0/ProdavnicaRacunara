@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Prodavnica_Racunara.Services
 {
@@ -1221,6 +1220,8 @@ namespace Prodavnica_Racunara.Services
 
         public void Buy()
         {
+            listaKupljenihArtikala.Clear();
+
             int sifra = 1;
             int kolicina = 0;
 
@@ -1254,11 +1255,11 @@ namespace Prodavnica_Racunara.Services
                     Console.Clear();
 
                     Artikal artikalBuy = listaArtikala.Where(x => x.Sifra == sifra).FirstOrDefault();
-                    if (artikalBuy.Kolicina >= kolicina)
+                    if (artikalBuy.Kolicina >= kolicina && kolicina > 0)
                     {
                         artikalBuy.Kolicina -= kolicina;
 
-                        KupljeniArtikal kupljeniArtikal = new KupljeniArtikal { ID = 1, Kolicina = kolicina, Artikal = artikalBuy, Cena = artikalBuy.Cena, UkupnaCena = kolicina * artikalBuy.Cena };
+                        KupljeniArtikal kupljeniArtikal = new KupljeniArtikal { ID = 1, Kolicina = kolicina, Artikal = artikalBuy, Cena = artikalBuy.Cena, UkupnaCena = artikalBuy.Cena * kolicina};
                         listaKupljenihArtikala.Add(kupljeniArtikal);
 
                         Console.Clear();
@@ -1268,6 +1269,7 @@ namespace Prodavnica_Racunara.Services
                     else
                     {
                         Console.WriteLine("Nazalost nemamo kolicinu koju trazite!");
+                        Console.ReadLine();
                     }
                 }
             }
@@ -1277,10 +1279,13 @@ namespace Prodavnica_Racunara.Services
         {
             StavkaRacuna stavkaRacuna = null;
 
+            int id = 1;
+
             foreach (KupljeniArtikal kupljeniArtikal in listaKupljenihArtikala)
             {
-                stavkaRacuna = new StavkaRacuna { ID = 1, ProdatArtikal = kupljeniArtikal, Cena = kupljeniArtikal.Cena, Kolicina = kupljeniArtikal.Kolicina };
+                stavkaRacuna = new StavkaRacuna { ID = id, ProdatArtikal = kupljeniArtikal, Cena = kupljeniArtikal.Cena, Kolicina = kupljeniArtikal.Kolicina };
                 listaStavkiRacuna.Add(stavkaRacuna);
+                id++;
             }
             Racun racun = new Racun { Sifra = 1, Vreme = DateTime.Now, UkupnaCena = stavkaRacuna.Cena * stavkaRacuna.Kolicina, ImeProdavca = "test", PrezimeProdavca = "test", listaStavkiRacuna = listaStavkiRacuna };
             listaRacuna.Add(racun);
@@ -1298,7 +1303,8 @@ namespace Prodavnica_Racunara.Services
                     {
                         Console.WriteLine("Naziv Artikla:" + stavkaRacuna.ProdatArtikal.Artikal.Naziv);
                         Console.WriteLine("Cena Artikla:" + stavkaRacuna.ProdatArtikal.Artikal.Cena);
-                        Console.WriteLine("Kupljena kolicina:" + stavkaRacuna.ProdatArtikal.Artikal.Kolicina);
+                        Console.WriteLine("Kupljena kolicina:" + stavkaRacuna.Kolicina);
+                        Console.WriteLine("=======================);
                     }
                     Console.WriteLine("=================================");
 
