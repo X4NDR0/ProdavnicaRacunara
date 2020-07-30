@@ -2,11 +2,9 @@
 using Prodavnica_Racunara.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Prodavnica_Racunara.Services
 {
@@ -15,6 +13,10 @@ namespace Prodavnica_Racunara.Services
         private static List<Korisnik> listaKorisnika = new List<Korisnik>();
         private static List<Artikal> listaArtikala = new List<Artikal>();
         private static List<Kategorija> listaKategorija = new List<Kategorija>();
+        private static List<KupljeniArtikal> listaKupljenihArtikala = new List<KupljeniArtikal>();
+        private static List<Racun> listaRacuna = new List<Racun>();
+        private static List<StavkaRacuna> listaStavkiRacuna = new List<StavkaRacuna>();
+
 
         public string lokacija = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../../../"));
 
@@ -87,6 +89,8 @@ namespace Prodavnica_Racunara.Services
             Console.WriteLine("21.Sortiraj artikle po nazivu opadajuce");
             Console.WriteLine("22.Sortiraj artikle po ceni rastuce");
             Console.WriteLine("23.Sortiraj artikle po ceni opdajuce");
+            Console.WriteLine("24.Kupi");
+            Console.WriteLine("25.Naplati");
 
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             Console.WriteLine("0.Izlaz");
@@ -229,30 +233,32 @@ namespace Prodavnica_Racunara.Services
             }
         }
 
-        //public void WriteConfigurationByPriceRange()
-        //{
-        //    Console.Write("Unesite cenu od:");
-        //    double.TryParse(Console.ReadLine(), out double cenaOd);
+        public void WriteConfigurationByPriceRange()
+        {
+            Console.Write("Unesite cenu od:");
+            double.TryParse(Console.ReadLine(), out double cenaOd);
 
-        //    Console.Clear();
+            Console.Clear();
 
-        //    Console.Write("Unesite cenu do:");
-        //    double.TryParse(Console.ReadLine(), out double cenaDo);
+            Console.Write("Unesite cenu do:");
+            double.TryParse(Console.ReadLine(), out double cenaDo);
 
-        //    foreach (Artikal konfiguracija in listaArtikala)
-        //    {
-        //        if (konfiguracija.Cena >= cenaOd && cenaDo <= konfiguracija.Cena && konfiguracija is GotovaKonfiguracija)
-        //        {
-        //            Console.Write("Sifra:" + konfiguracija.Sifra + "\nKolicina:" + konfiguracija.Kolicina + "\nCena:{0:0.00}" + "\nNaziv konfiguracije:" + konfiguracija.Naziv + "\nOpis konfiguracije:" + konfiguracija.Opis + "\n", konfiguracija.Cena);
-        //            Console.WriteLine("=-=-=-=-=-=Komponente=-=-=-=-=-=");
-        //            foreach (Komponenta komponenta in konfiguracija.ListaKomponenata)
-        //            {
-        //                Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nOpis:" + komponenta.Opis + "\nCena:{0:0.00}", komponenta.Cena + "\n");
-        //                Console.WriteLine("============================");
-        //            }
-        //        }
-        //    }
-        //}
+            foreach (Artikal konfiguracija in listaArtikala)
+            {
+                if (konfiguracija.Cena >= cenaOd && cenaDo <= konfiguracija.Cena && konfiguracija is GotovaKonfiguracija)
+                {
+                    GotovaKonfiguracija gotovaKonfiguracija = konfiguracija as GotovaKonfiguracija;
+
+                    Console.Write("Sifra:" + konfiguracija.Sifra + "\nKolicina:" + konfiguracija.Kolicina + "\nCena:{0:0.00}" + "\nNaziv konfiguracije:" + konfiguracija.Naziv + "\nOpis konfiguracije:" + konfiguracija.Opis + "\n", konfiguracija.Cena);
+                    Console.WriteLine("=-=-=-=-=-=Komponente=-=-=-=-=-=");
+                    foreach (Komponenta komponenta in gotovaKonfiguracija.ListaKomponenata)
+                    {
+                        Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nOpis:" + komponenta.Opis + "\nCena:{0:0.00}", komponenta.Cena + "\n");
+                        Console.WriteLine("============================");
+                    }
+                }
+            }
+        }
 
         public void WriteConfigurationByCountRange()
         {
@@ -268,13 +274,15 @@ namespace Prodavnica_Racunara.Services
             {
                 if (konfiguracija.Kolicina >= kolicinaOd && kolicinaDo <= konfiguracija.Kolicina && konfiguracija is GotovaKonfiguracija)
                 {
+                    GotovaKonfiguracija gotovaKonfiguracija = konfiguracija as GotovaKonfiguracija;
+
                     Console.Write("Sifra:" + konfiguracija.Sifra + "\nKolicina:" + konfiguracija.Kolicina + "\nCena:{0:0.00}" + "\nNaziv konfiguracije:" + konfiguracija.Naziv + "\nOpis konfiguracije:" + konfiguracija.Opis + "\n", konfiguracija.Cena);
                     Console.WriteLine("=-=-=-=-=-=Komponente=-=-=-=-=-=");
-                    //foreach (Komponenta komponenta in konfiguracija.ListaKomponenata)
-                    //{
-                    //    Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nOpis:" + komponenta.Opis + "\nCena:{0:0.00}", komponenta.Cena + "\n");
-                    //    Console.WriteLine("============================");
-                    //}
+                    foreach (Komponenta komponenta in gotovaKonfiguracija.ListaKomponenata)
+                    {
+                        Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nOpis:" + komponenta.Opis + "\nCena:{0:0.00}", komponenta.Cena + "\n");
+                        Console.WriteLine("============================");
+                    }
                 }
             }
         }
@@ -313,7 +321,6 @@ namespace Prodavnica_Racunara.Services
 
         public void WriteComponentsByPriceRange()
         {
-            //Nema referencu ka kategoriju
             Console.Write("Od cene:");
             double.TryParse(Console.ReadLine(), out double odCene);
 
@@ -326,9 +333,10 @@ namespace Prodavnica_Racunara.Services
 
             foreach (Artikal komponenta in listaArtikala)
             {
-                if (komponenta.Cena >= odCene && komponenta.Cena <= doCene && komponenta is Komponenta)
+                Komponenta komponentaWrite = komponenta as Komponenta;
+                if (komponentaWrite.Cena >= odCene && komponentaWrite.Cena <= doCene && komponentaWrite is Komponenta)
                 {
-                    //Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta. + "\nOpis:" + komponenta.Opis + "\n");
+                    Console.Write("Sifra:" + komponentaWrite.Sifra + "\nNaziv:" + komponentaWrite.Naziv + "\nCena:" + komponentaWrite.Cena + "\nKolicina:" + komponentaWrite.Kolicina + "\nNaziv kategorije:" + komponentaWrite.Kategorija.Naziv + "\nOpis:" + komponentaWrite.Opis + "\n");
                 }
             }
         }
@@ -1082,7 +1090,7 @@ namespace Prodavnica_Racunara.Services
 
                     case Opcije.IspisiKonfiguracijePoOpseguCena:
                         Console.Clear();
-                        // WriteConfigurationByPriceRange();
+                        WriteConfigurationByPriceRange();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         Console.Clear();
@@ -1184,6 +1192,22 @@ namespace Prodavnica_Racunara.Services
                         Console.Clear();
                         break;
 
+                    case Opcije.Kupi:
+                        Console.Clear();
+                        Buy();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+
+                    case Opcije.Naplati:
+                        Console.Clear();
+                        Naplati();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+
                     case Opcije.Exit:
                         Environment.Exit(0);
                         break;
@@ -1193,6 +1217,95 @@ namespace Prodavnica_Racunara.Services
                 }
 
             } while (options != Opcije.Exit);
+        }
+
+        public void Buy()
+        {
+            int sifra = 1;
+            int kolicina = 0;
+
+            while (sifra != 0)
+            {
+                Console.Clear();
+
+                foreach (Artikal artikal in listaArtikala)
+                {
+                    WriteAllArticals(artikal);
+                }
+
+                Console.Write("Unesite sifru proizvoda za prekid kupovine upisite 0:");
+                int.TryParse(Console.ReadLine(), out sifra);
+
+                Console.Clear();
+
+                if (sifra == 0)
+                {
+                    Console.WriteLine("Kupljeni proizvodi su:");
+                    foreach (KupljeniArtikal kupljeniArtikli in listaKupljenihArtikala)
+                    {
+                        Console.WriteLine("ID:" + kupljeniArtikli.ID + " Kolicina:" + kupljeniArtikli.Kolicina + " Cena:" + kupljeniArtikli.Cena + " Ukupna cena:" + kupljeniArtikli.UkupnaCena + " Ime artikal:" + kupljeniArtikli.Artikal.Naziv);
+                    }
+                }
+                else
+                {
+                    Console.Write("Unesite kolicinu proizvoda:");
+                    int.TryParse(Console.ReadLine(), out kolicina);
+
+                    Console.Clear();
+
+                    Artikal artikalBuy = listaArtikala.Where(x => x.Sifra == sifra).FirstOrDefault();
+                    if (artikalBuy.Kolicina >= kolicina)
+                    {
+                        artikalBuy.Kolicina -= kolicina;
+
+                        KupljeniArtikal kupljeniArtikal = new KupljeniArtikal { ID = 1, Kolicina = kolicina, Artikal = artikalBuy, Cena = artikalBuy.Cena, UkupnaCena = kolicina * artikalBuy.Cena };
+                        listaKupljenihArtikala.Add(kupljeniArtikal);
+
+                        Console.Clear();
+                        Console.WriteLine("Artikal je uspesno dodat u korpu!");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nazalost nemamo kolicinu koju trazite!");
+                    }
+                }
+            }
+        }
+
+        public void Naplati()
+        {
+            StavkaRacuna stavkaRacuna = null;
+
+            foreach (KupljeniArtikal kupljeniArtikal in listaKupljenihArtikala)
+            {
+                stavkaRacuna = new StavkaRacuna { ID = 1, ProdatArtikal = kupljeniArtikal, Cena = kupljeniArtikal.Cena, Kolicina = kupljeniArtikal.Kolicina };
+                listaStavkiRacuna.Add(stavkaRacuna);
+            }
+            Racun racun = new Racun { Sifra = 1, Vreme = DateTime.Now, UkupnaCena = stavkaRacuna.Cena * stavkaRacuna.Kolicina, ImeProdavca = "test", PrezimeProdavca = "test", listaStavkiRacuna = listaStavkiRacuna };
+            listaRacuna.Add(racun);
+
+            foreach (Racun racunIspis in listaRacuna)
+            {
+                if (racunIspis.Sifra == 1)
+                {
+                    Console.WriteLine("=================================");
+                    Console.WriteLine("Sifra:" + racunIspis.Sifra);
+                    Console.WriteLine("Vreme:" + racunIspis.Vreme.ToString());
+
+                    Console.WriteLine("======Kupljeni Artikli=====");
+                    foreach (StavkaRacuna stavkaRacunaIspis in listaStavkiRacuna)
+                    {
+                        Console.WriteLine("Naziv Artikla:" + stavkaRacuna.ProdatArtikal.Artikal.Naziv);
+                        Console.WriteLine("Cena Artikla:" + stavkaRacuna.ProdatArtikal.Artikal.Cena);
+                        Console.WriteLine("Kupljena kolicina:" + stavkaRacuna.ProdatArtikal.Artikal.Kolicina);
+                    }
+                    Console.WriteLine("=================================");
+
+                    Console.WriteLine("Ukupna cena:" + racunIspis.UkupnaCena);
+                    Console.WriteLine("===============END===============");
+                }
+            }
         }
 
         public void SaveArtikal()

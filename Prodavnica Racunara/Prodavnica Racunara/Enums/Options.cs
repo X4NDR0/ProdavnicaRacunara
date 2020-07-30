@@ -32,6 +32,9 @@
         SortirajArtiklePoCeni = 22,
         SortirajArtiklePoCeniOpadajuce = 23,
 
+        Kupi = 24,
+        Naplati = 25,
+
         Exit = 0
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Prodavnica_Racunara.Enums;
+﻿using Prodavnica_Racunara.Enums;
+using System;
 
 namespace Prodavnica_Racunara.Models
 {

@@ -1,8 +1,5 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
+﻿using Prodavnica_Racunara.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Prodavnica_Racunara.Enums;
 
 namespace Prodavnica_Racunara.Models
 {
