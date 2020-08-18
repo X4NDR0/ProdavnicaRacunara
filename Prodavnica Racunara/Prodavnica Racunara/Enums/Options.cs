@@ -15,25 +15,26 @@
         IspisiArtiklePoSifri = 8,
         IspisiArtiklePoNazivu = 9,
         IspisiArtiklePoCeni = 10,
+        IspisiArtiklePoOpseguCene = 11,
 
-        IspisiKonfiguracijePoSifri = 11,
-        IspisiKonfiguracijePoNazivu = 12,
-        IspisiKonfiguracijePoOpseguCena = 13,
-        IspisiKonfiguracijePoOpseguKolicine = 14,
+        IspisiKonfiguracijePoSifri = 12,
+        IspisiKonfiguracijePoNazivu = 13,
+        IspisiKonfiguracijePoOpseguCena = 14,
+        IspisiKonfiguracijePoOpseguKolicine = 15,
 
-        IspisiKomponentePoSifri = 15,
-        IspisiKomponentePoNazivu = 16,
-        IspisiKomponentePoOpseguCene = 17,
-        IspisiKomponentePoOpseguKolicine = 18,
-        IspisiKomponentePokategoriji = 19,
+        IspisiKomponentePoSifri = 16,
+        IspisiKomponentePoNazivu = 17,
+        IspisiKomponentePoOpseguCene = 18,
+        IspisiKomponentePoOpseguKolicine = 19,
+        IspisiKomponentePokategoriji = 20,
 
-        SortirajArtiklePoNazivu = 20,
-        SortirajArtiklePoNazivuOpadajuce = 21,
-        SortirajArtiklePoCeni = 22,
-        SortirajArtiklePoCeniOpadajuce = 23,
+        SortirajArtiklePoNazivu = 21,
+        SortirajArtiklePoNazivuOpadajuce = 22,
+        SortirajArtiklePoCeni = 23,
+        SortirajArtiklePoCeniOpadajuce = 24,
 
-        Kupi = 24,
-        Naplati = 25,
+        Kupi = 25,
+        Naplati = 26,
 
         Exit = 0
     }

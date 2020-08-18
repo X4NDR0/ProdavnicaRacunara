@@ -65,31 +65,32 @@ namespace Prodavnica_Racunara.Services
 
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             Console.WriteLine("8.Ispisi artikle po sifri");
-            Console.WriteLine("9.Ispisi artikle po ceni");
-            Console.WriteLine("10.Ispisi artikle po opsegu cene");
+            Console.WriteLine("9.Ispisi artikle po nazivu");
+            Console.WriteLine("10.Ispisi artikle po ceni");
+            Console.WriteLine("11.Ispisi artikle po opsegu cene");
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            Console.WriteLine("11.Ispisi konfuguraciju po sifri");
-            Console.WriteLine("12.Ispisi konfuguraciju po nazivu");
-            Console.WriteLine("13.Ispisi konfuguraciju po opsegu cene");
-            Console.WriteLine("14.Ispisi konfuguraciju po opsegu kolicine");
+            Console.WriteLine("12.Ispisi konfuguraciju po sifri");
+            Console.WriteLine("13.Ispisi konfuguraciju po nazivu");
+            Console.WriteLine("14.Ispisi konfuguraciju po opsegu cene");
+            Console.WriteLine("15.Ispisi konfuguraciju po opsegu kolicine");
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-            Console.WriteLine("15.Ispisi komponente po sifri");
-            Console.WriteLine("16.Ispisi komponente po nazivu");
-            Console.WriteLine("17.Ispisi komponente po opsegu cene");
-            Console.WriteLine("18.Ispisi komponente po opsegu kolicine");
-            Console.WriteLine("19.Ispisi komponente po kategoriji");
+            Console.WriteLine("16.Ispisi komponente po sifri");
+            Console.WriteLine("17.Ispisi komponente po nazivu");
+            Console.WriteLine("18.Ispisi komponente po opsegu cene");
+            Console.WriteLine("19.Ispisi komponente po opsegu kolicine");
+            Console.WriteLine("20.Ispisi komponente po kategoriji");
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 
-            Console.WriteLine("20.Sortiraj artikle po nazivu");
-            Console.WriteLine("21.Sortiraj artikle po nazivu opadajuce");
-            Console.WriteLine("22.Sortiraj artikle po ceni rastuce");
-            Console.WriteLine("23.Sortiraj artikle po ceni opdajuce");
-            Console.WriteLine("24.Kupi");
-            Console.WriteLine("25.Naplati");
+            Console.WriteLine("21.Sortiraj artikle po nazivu");
+            Console.WriteLine("22.Sortiraj artikle po nazivu opadajuce");
+            Console.WriteLine("23.Sortiraj artikle po ceni rastuce");
+            Console.WriteLine("24.Sortiraj artikle po ceni opdajuce");
+            Console.WriteLine("25.Kupi");
+            Console.WriteLine("26.Naplati");
 
             Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             Console.WriteLine("0.Izlaz");
@@ -107,7 +108,23 @@ namespace Prodavnica_Racunara.Services
 
             foreach (Artikal artikal in listaArtikala)
             {
-                if (artikal.Sifra == sifra)
+                if (!(artikal is Memorija) && !(artikal is Procesor) && !(artikal is Komponenta) && !(artikal is GotovaKonfiguracija) && artikal.Sifra == sifra)
+                {
+                    Console.WriteLine(artikal.Sifra + " " + artikal.Naziv + " " + artikal.Cena + " " + artikal.Kolicina + " " + artikal.Opis);
+                }
+            }
+        }
+
+        public void WriteArticalByName()
+        {
+            Console.Write("Unesite ime artikla:");
+            string ime = Console.ReadLine();
+
+            Console.Clear();
+
+            foreach (Artikal artikal in listaArtikala)
+            {
+                if (!(artikal is Memorija) && !(artikal is Procesor) && !(artikal is Komponenta) && !(artikal is GotovaKonfiguracija) && artikal.Naziv == ime)
                 {
                     Console.WriteLine(artikal.Sifra + " " + artikal.Naziv + " " + artikal.Cena + " " + artikal.Kolicina + " " + artikal.Opis);
                 }
@@ -123,7 +140,7 @@ namespace Prodavnica_Racunara.Services
 
             foreach (Artikal artikal in listaArtikala)
             {
-                if (artikal.Cena == cena)
+                if (!(artikal is Memorija) && !(artikal is Procesor) && !(artikal is Komponenta) && !(artikal is GotovaKonfiguracija) && artikal.Cena == cena)
                 {
                     Console.WriteLine(artikal.Sifra + " " + artikal.Naziv + " " + artikal.Cena + " " + artikal.Kolicina + " " + artikal.Opis);
                 }
@@ -144,7 +161,7 @@ namespace Prodavnica_Racunara.Services
 
             foreach (Artikal artikal in listaArtikala)
             {
-                if (artikal.Cena >= odCene && artikal.Cena <= doCene)
+                if (!(artikal is Memorija) && !(artikal is Procesor) && !(artikal is Komponenta) && !(artikal is GotovaKonfiguracija) && artikal.Cena >= odCene && artikal.Cena <= doCene)
                 {
                     Console.WriteLine(artikal.Sifra + " " + artikal.Naziv + " " + artikal.Cena + " " + artikal.Kolicina + " " + artikal.Opis);
                 }
@@ -242,6 +259,8 @@ namespace Prodavnica_Racunara.Services
             Console.Write("Unesite cenu do:");
             double.TryParse(Console.ReadLine(), out double cenaDo);
 
+            Console.Clear();
+
             foreach (Artikal konfiguracija in listaArtikala)
             {
                 if (konfiguracija.Cena >= cenaOd && cenaDo <= konfiguracija.Cena && konfiguracija is GotovaKonfiguracija)
@@ -269,6 +288,8 @@ namespace Prodavnica_Racunara.Services
             Console.Write("Unesite kolicinu do:");
             int.TryParse(Console.ReadLine(), out int kolicinaDo);
 
+            Console.Clear();
+
             foreach (Artikal konfiguracija in listaArtikala)
             {
                 if (konfiguracija.Kolicina >= kolicinaOd && kolicinaDo <= konfiguracija.Kolicina && konfiguracija is GotovaKonfiguracija)
@@ -293,11 +314,12 @@ namespace Prodavnica_Racunara.Services
 
             Console.Clear();
 
-            foreach (Komponenta komponenta in listaArtikala)
+            foreach (Artikal komponenta in listaArtikala)
             {
-                if (komponenta.Sifra == sifra && komponenta is Komponenta)
+                if (komponenta.Sifra == sifra && komponenta is Komponenta && !(komponenta is Memorija) && !(komponenta is GotovaKonfiguracija) && !(komponenta is Procesor))
                 {
-                    Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
+                    Komponenta component = komponenta as Komponenta;
+                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                 }
             }
         }
@@ -309,11 +331,12 @@ namespace Prodavnica_Racunara.Services
 
             Console.Clear();
 
-            foreach (Komponenta komponenta in listaArtikala)
+            foreach (Artikal komponenta in listaArtikala)
             {
-                if (komponenta.Naziv.Contains(naziv) && komponenta is Komponenta)
+                if (komponenta.Naziv.Contains(naziv) && komponenta is Komponenta && !(komponenta is Memorija) && !(komponenta is Procesor))
                 {
-                    Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
+                    Komponenta component = komponenta as Komponenta;
+                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                 }
             }
         }
@@ -332,10 +355,10 @@ namespace Prodavnica_Racunara.Services
 
             foreach (Artikal komponenta in listaArtikala)
             {
-                Komponenta komponentaWrite = komponenta as Komponenta;
-                if (komponentaWrite.Cena >= odCene && komponentaWrite.Cena <= doCene && komponentaWrite is Komponenta)
+                Komponenta component = komponenta as Komponenta;
+                if (component.Cena >= odCene && component.Cena <= doCene && component is Komponenta && !(komponenta is Memorija) && !(komponenta is Procesor))
                 {
-                    Console.Write("Sifra:" + komponentaWrite.Sifra + "\nNaziv:" + komponentaWrite.Naziv + "\nCena:" + komponentaWrite.Cena + "\nKolicina:" + komponentaWrite.Kolicina + "\nNaziv kategorije:" + komponentaWrite.Kategorija.Naziv + "\nOpis:" + komponentaWrite.Opis + "\n");
+                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                 }
             }
         }
@@ -353,11 +376,12 @@ namespace Prodavnica_Racunara.Services
 
             Console.Clear();
 
-            foreach (Komponenta komponenta in listaArtikala)
+            foreach (Artikal komponenta in listaArtikala)
             {
-                if (komponenta.Kolicina >= odKolicine && komponenta.Kolicina <= doKolicine && komponenta is Komponenta)
+                if (komponenta.Kolicina >= odKolicine && komponenta.Kolicina <= doKolicine && komponenta is Komponenta && !(komponenta is Memorija) && !(komponenta is Procesor))
                 {
-                    Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
+                    Komponenta component = komponenta as Komponenta;
+                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                 }
             }
         }
@@ -382,11 +406,12 @@ namespace Prodavnica_Racunara.Services
 
                     Console.Clear();
 
-                    foreach (Komponenta komponenta in listaArtikala)
+                    foreach (Artikal komponenta in listaArtikala)
                     {
-                        if (komponenta.Kategorija.Sifra == sifra && komponenta is Artikal)
+                        Komponenta component = komponenta as Komponenta;
+                        if (component.Kategorija.Sifra == sifra)
                         {
-                            Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
+                            Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                         }
                     }
                     break;
@@ -415,8 +440,7 @@ namespace Prodavnica_Racunara.Services
 
         public void WriteAllArticals(Artikal artikalData)
         {
-            Artikal artikal = artikalData as Artikal;
-            Console.WriteLine(artikal.Sifra + " " + artikal.Naziv + " " + artikal.Cena + " " + artikal.Kolicina + " " + artikal.Opis);
+            Console.WriteLine(artikalData.Sifra + " " + artikalData.Naziv + " " + artikalData.Cena + " " + artikalData.Kolicina + " " + artikalData.Opis);
         }
 
         public void WriteAllCategory()
@@ -438,19 +462,34 @@ namespace Prodavnica_Racunara.Services
         public void WriteAllComponents(Artikal artikal)
         {
             Komponenta komponenta = artikal as Komponenta;
-            Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
+            if (!(artikal is Procesor) && !(artikal is Memorija))
+            {
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            }
         }
 
         public void WriteAllProcessors(Artikal artikal)
         {
             Procesor procesor = artikal as Procesor;
-            Console.Write("Sifra:" + procesor.Sifra + "\nNaziv:" + procesor.Naziv + "\nCena:" + procesor.Cena + "\nKolicina:" + procesor.Kolicina + "\nNaziv kategorije:" + procesor.Kategorija.Naziv + "\nOpis:" + procesor.Opis + "\nRadni takt:" + procesor.RadniTakt + "\nBroj jezgara:" + procesor.BrojJezgra + "\n");
+            if (!(artikal is Memorija))
+            {
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                Console.Write("Sifra:" + procesor.Sifra + "\nNaziv:" + procesor.Naziv + "\nCena:" + procesor.Cena + "\nKolicina:" + procesor.Kolicina + "\nNaziv kategorije:" + procesor.Kategorija.Naziv + "\nOpis:" + procesor.Opis + "\nRadni takt:" + procesor.RadniTakt + "\nBroj jezgara:" + procesor.BrojJezgra + "\n");
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            }
         }
 
         public void WriteAllMemory(Artikal artikal)
         {
             Memorija memorija = artikal as Memorija;
-            Console.Write("Sifra:" + memorija.Sifra + "\nNaziv:" + memorija.Naziv + "\nCena:" + memorija.Cena + "\nKolicina:" + memorija.Kolicina + "\nNaziv kategorije:" + memorija.Kategorija.Naziv + "\nOpis:" + memorija.Opis + "\nKapacitet:" + memorija.Kapacitet + "\n");
+            if (!(artikal is Procesor))
+            {
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                Console.Write("Sifra:" + memorija.Sifra + "\nNaziv:" + memorija.Naziv + "\nCena:" + memorija.Cena + "\nKolicina:" + memorija.Kolicina + "\nNaziv kategorije:" + memorija.Kategorija.Naziv + "\nOpis:" + memorija.Opis + "\nKapacitet:" + memorija.Kapacitet + "\n");
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+            }
         }
 
         public void WriteAllEntity()
@@ -553,21 +592,29 @@ namespace Prodavnica_Racunara.Services
             {
                 if (artikal is GotovaKonfiguracija && artikal.Status == Status.Aktivan)
                 {
+                    Console.WriteLine("=================================");
                     WriteAllConfiguration(artikal);
+                    Console.WriteLine("=================================");
                 }
                 else if (artikal is Komponenta && artikal.Status == Status.Aktivan)
                 {
+                    Console.WriteLine("=================================");
                     WriteAllComponents(artikal);
+                    Console.WriteLine("=================================");
                 }
                 else if (artikal is Artikal && artikal.Status == Status.Aktivan)
                 {
+                    Console.WriteLine("=================================");
                     WriteAllArticals(artikal);
+                    Console.WriteLine("=================================");
                 }
             }
         }
 
         public void AddArtical()
         {
+            Console.Clear();
+
             Console.Write("Unesite sifru:");
             int.TryParse(Console.ReadLine(), out int sifraAdd);
 
@@ -604,6 +651,8 @@ namespace Prodavnica_Racunara.Services
 
         public void AddComponent()
         {
+            Console.Clear();
+
             Console.Write("Unesite sifru:");
             int.TryParse(Console.ReadLine(), out int sifraKomponente);
 
@@ -641,6 +690,8 @@ namespace Prodavnica_Racunara.Services
                 Komponenta komponentaAdd = new Komponenta { Sifra = sifraKomponente, Cena = cenaKomponente, Kolicina = kolicinaKomponente, Naziv = nazivKomponente, Opis = opisKomponente, Kategorija = kategorijaSelect, Status = Status.Aktivan };
                 listaArtikala.Add(komponentaAdd);
                 SaveComponent();
+                Console.Clear();
+                Console.WriteLine("Komponenta je uspesno dodata!");
             }
             else
             {
@@ -650,6 +701,8 @@ namespace Prodavnica_Racunara.Services
 
         public void AddConfiguration()
         {
+            Console.Clear();
+
             Console.Write("Unesite sifru:");
             int.TryParse(Console.ReadLine(), out int sifraKonfiguracije);
 
@@ -686,10 +739,9 @@ namespace Prodavnica_Racunara.Services
             int sifreKomponenata;
             List<Komponenta> listaArtikalaAdd = new List<Komponenta>();
 
-            Console.Write("Unesite sifre komponenata kada zavrisite upisite 0:");
-
             do
             {
+                Console.Write("Unesite sifre komponenata kada zavrisite upisite 0:");
                 int.TryParse(Console.ReadLine(), out sifreKomponenata);
                 if (sifreKomponenata != 0)
                 {
@@ -703,10 +755,14 @@ namespace Prodavnica_Racunara.Services
                 }
 
             } while (sifreKomponenata != 0);
+
+            Console.WriteLine("Konfiguracija je uspesno dodata!");
         }
 
         public void AddCategory()
         {
+            Console.Clear();
+
             Console.Write("Unesite sifru:");
             int.TryParse(Console.ReadLine(), out int sifraKategorije);
 
@@ -733,6 +789,8 @@ namespace Prodavnica_Racunara.Services
 
         public void AddProcesor()
         {
+            Console.Clear();
+
             Console.Write("Unesite sifru:");
             int.TryParse(Console.ReadLine(), out int sifraProcesora);
 
@@ -756,8 +814,12 @@ namespace Prodavnica_Racunara.Services
             Console.Write("Unesite opis:");
             string opisProcesora = Console.ReadLine();
 
+            Console.Clear();
+
             Console.Write("Unesite radni takt:");
             double.TryParse(Console.ReadLine(), out double radniTakt);
+
+            Console.Clear();
 
             Console.Write("Unesite broj jezgara:");
             int.TryParse(Console.ReadLine(), out int brojJezgra);
@@ -766,10 +828,17 @@ namespace Prodavnica_Racunara.Services
             Procesor procesorAdd = new Procesor { Sifra = sifraProcesora, Naziv = nazivProcesora, Cena = cenaProcesora, Kolicina = kolicinaProcesora, Opis = opisProcesora, RadniTakt = radniTakt, BrojJezgra = brojJezgra, Status = Status.Aktivan, Kategorija = kategorijaAdd };
 
             listaArtikala.Add(procesorAdd);
+
+            SaveProcessor();
+
+            Console.Clear();
+            Console.WriteLine("Procesor je uspesno dodat!");
         }
 
         public void AddMemory()
         {
+            Console.Clear();
+
             Console.Write("Unesite sifru:");
             int.TryParse(Console.ReadLine(), out int sifraMemorije);
 
@@ -793,13 +862,21 @@ namespace Prodavnica_Racunara.Services
             Console.Write("Unesite opis:");
             string opisMemorije = Console.ReadLine();
 
+            Console.Clear();
+
             Console.Write("Unesite kapacitet:");
             int.TryParse(Console.ReadLine(), out int kapacitet);
+
+            Console.Clear();
 
             Kategorija kategorijaAdd = listaKategorija.Where(x => x.Sifra == 8882).FirstOrDefault();
             Memorija memorijaAdd = new Memorija { Sifra = sifraMemorije, Naziv = nazivMemorije, Cena = cenaMemorije, Kolicina = kolicinaMemorije, Opis = opisMemorije, Kapacitet = kapacitet, Status = Status.Aktivan, Kategorija = kategorijaAdd };
 
             listaArtikala.Add(memorijaAdd);
+
+            SaveMemory();
+
+            Console.WriteLine("Memorija je uspesno dodata!");
         }
 
         public void AddEntity()
@@ -849,9 +926,14 @@ namespace Prodavnica_Racunara.Services
 
         public void DeleteArtical()
         {
+            Console.Clear();
+
             foreach (Artikal artikal in listaArtikala)
             {
-                WriteAllArticals(artikal);
+                if (artikal is Artikal)
+                {
+                    WriteAllArticals(artikal);
+                }
             }
 
             Console.Write("Unesite sifru artikala:");
@@ -863,12 +945,16 @@ namespace Prodavnica_Racunara.Services
                 if (artikalFound.Sifra == id)
                 {
                     artikalFound.Status = Status.Obrisan;
+                    Console.Clear();
+                    Console.WriteLine("Artikal je uspesno obrisan!");
                 }
             }
         }
 
         public void DeleteConfiguration()
         {
+            Console.Clear();
+
             foreach (Artikal artikal in listaArtikala)
             {
                 if (artikal is GotovaKonfiguracija)
@@ -884,6 +970,8 @@ namespace Prodavnica_Racunara.Services
                 if (artikalKonfiguracija.Sifra == sifraKonfiguracije)
                 {
                     artikalKonfiguracija.Status = Status.Obrisan;
+                    Console.Clear();
+                    Console.WriteLine("Konfiguracija je uspesno dodata!");
                 }
             }
 
@@ -891,6 +979,8 @@ namespace Prodavnica_Racunara.Services
 
         public void DeleteComponent()
         {
+            Console.Clear();
+
             foreach (Artikal artikal in listaArtikala)
             {
                 if (artikal is Komponenta)
@@ -907,6 +997,8 @@ namespace Prodavnica_Racunara.Services
                 if (artikalKomponenta.Sifra == sifraKomponente)
                 {
                     artikalKomponenta.Status = Status.Obrisan;
+                    Console.Clear();
+                    Console.WriteLine("Komponenta je uspesno obrisana!");
                 }
             }
         }
@@ -914,9 +1006,11 @@ namespace Prodavnica_Racunara.Services
 
         public void DeleteProcesor()
         {
+            Console.Clear();
+
             foreach (Artikal artikal in listaArtikala)
             {
-                if (artikal is Procesor && !(artikal is Komponenta) && !(artikal is Artikal))
+                if (artikal is Procesor)
                 {
                     WriteAllProcessors(artikal);
                 }
@@ -930,6 +1024,8 @@ namespace Prodavnica_Racunara.Services
                 if (artikalDelete.Sifra == sifraProcesora)
                 {
                     artikalDelete.Status = Status.Obrisan;
+                    Console.Clear();
+                    Console.WriteLine("Procesor je uspesno izbrisan!");
                 }
             }
         }
@@ -937,9 +1033,11 @@ namespace Prodavnica_Racunara.Services
 
         public void DeleteMemory()
         {
+            Console.Clear();
+
             foreach (Artikal artikal in listaArtikala)
             {
-                if (artikal is Memorija && !(artikal is Komponenta) && !(artikal is Artikal))
+                if (artikal is Memorija)
                 {
                     WriteAllMemory(artikal);
                 }
@@ -953,7 +1051,8 @@ namespace Prodavnica_Racunara.Services
                 if (artikalDelete.Sifra == sifraMemorije)
                 {
                     artikalDelete.Status = Status.Obrisan;
-
+                    Console.Clear();
+                    Console.WriteLine("Memorija je uspesno obrisana!");
                 }
             }
         }
@@ -1057,13 +1156,21 @@ namespace Prodavnica_Racunara.Services
 
                     case Opcije.IspisiArtiklePoNazivu:
                         Console.Clear();
-                        WriteCategoryByName();
+                        WriteArticalByName();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         Console.Clear();
                         break;
 
                     case Opcije.IspisiArtiklePoCeni:
+                        Console.Clear();
+                        WriteArticalByPrice();
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+
+                    case Opcije.IspisiArtiklePoOpseguCene:
                         Console.Clear();
                         WriteArticalByPriceRange();
                         Console.WriteLine("Press any key to continue...");
@@ -1222,7 +1329,6 @@ namespace Prodavnica_Racunara.Services
         {
             listaKupljenihArtikala.Clear();
             listaStavkiRacuna.Clear();
-
             int sifra = 1;
             int kolicina = 0;
             int id;
@@ -1295,212 +1401,222 @@ namespace Prodavnica_Racunara.Services
             }
         }
 
-            public void Naplati()
+        public void Naplati()
+        {
+            StavkaRacuna stavkaRacuna = null;
+
+            int idRacuna;
+
+            foreach (KupljeniArtikal kupljeniArtikal in listaKupljenihArtikala)
             {
-                StavkaRacuna stavkaRacuna = null;
+                stavkaRacuna = new StavkaRacuna { ProdatArtikal = kupljeniArtikal, Cena = kupljeniArtikal.Cena, Kolicina = kupljeniArtikal.Kolicina };
+                listaStavkiRacuna.Add(stavkaRacuna);
+            }
 
-                int idRacuna;
+            if (listaRacuna.Count == 0)
+            {
+                idRacuna = 1;
+            }
+            else
+            {
+                idRacuna = listaRacuna.Max(x => x.Sifra) + 1;
+            }
 
-                foreach (KupljeniArtikal kupljeniArtikal in listaKupljenihArtikala)
+            Racun racun = new Racun { Sifra = idRacuna, Vreme = DateTime.Now, UkupnaCena = stavkaRacuna.Cena * stavkaRacuna.Kolicina, ImeProdavca = "test", PrezimeProdavca = "test", listaStavkiRacuna = listaStavkiRacuna };
+            listaRacuna.Add(racun);
+
+            if (racun != null)
+            {
+                foreach (Racun racunIspis in listaRacuna)
                 {
-                    stavkaRacuna = new StavkaRacuna {ProdatArtikal = kupljeniArtikal, Cena = kupljeniArtikal.Cena, Kolicina = kupljeniArtikal.Kolicina };
-                    listaStavkiRacuna.Add(stavkaRacuna);
-                }
-
-                if (listaRacuna.Count == 0)
-                {
-                    idRacuna = 1;
-                }
-                else
-                {
-                    idRacuna = listaRacuna.Max(x => x.Sifra) + 1;
-                }
-
-                Racun racun = new Racun { Sifra = idRacuna, Vreme = DateTime.Now, UkupnaCena = stavkaRacuna.Cena * stavkaRacuna.Kolicina, ImeProdavca = "test", PrezimeProdavca = "test", listaStavkiRacuna = listaStavkiRacuna };
-                listaRacuna.Add(racun);
-
-                if (racun != null)
-                {
-                    foreach (Racun racunIspis in listaRacuna)
+                    if (racunIspis.Sifra == idRacuna)
                     {
-                        if (racunIspis.Sifra == idRacuna)
+                        Console.WriteLine("=================================");
+                        Console.WriteLine("Sifra:" + racunIspis.Sifra);
+                        Console.WriteLine("Vreme:" + racunIspis.Vreme.ToString());
+                        Console.WriteLine("Ime prodavca:");
+                        Console.WriteLine("Prezime prodavca:");
+
+                        Console.WriteLine("======Kupljeni Artikli=====");
+                        foreach (KupljeniArtikal kupljeniArtikal in listaKupljenihArtikala)
                         {
-                            Console.WriteLine("=================================");
-                            Console.WriteLine("Sifra:" + racunIspis.Sifra);
-                            Console.WriteLine("Vreme:" + racunIspis.Vreme.ToString());
-
-                            Console.WriteLine("======Kupljeni Artikli=====");
-                            foreach (StavkaRacuna stavkaRacunaIspis in listaStavkiRacuna)
-                            {
-                                Console.WriteLine("Naziv Artikla:" + stavkaRacunaIspis.ProdatArtikal.Artikal.Naziv);
-                                Console.WriteLine("Cena Artikla:" + stavkaRacunaIspis.ProdatArtikal.Artikal.Cena);
-                                Console.WriteLine("Kupljena kolicina:" + stavkaRacunaIspis.Kolicina);
-                                Console.WriteLine("=======================");
-                            }
-                            Console.WriteLine("=================================");
-
-                            Console.WriteLine("Ukupna cena:" + racunIspis.UkupnaCena);
-                            Console.WriteLine("===============END===============");
+                            Console.WriteLine("Naziv Artikla:" + kupljeniArtikal.Artikal.Naziv);
+                            Console.WriteLine("Cena Artikla:" + kupljeniArtikal.Artikal.Cena);
+                            Console.WriteLine("Kupljena kolicina:" + kupljeniArtikal.Kolicina);
+                            Console.WriteLine("=======================");
                         }
+                        Console.WriteLine("=================================");
+
+                        Console.WriteLine("Ukupna cena:" + racunIspis.UkupnaCena);
+                        Console.WriteLine("===============END===============");
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Greska prilikom kreiranja racuna!");
                 }
             }
-
-            public void SaveArtikal()
+            else
             {
-                StreamWriter swArtikal = new StreamWriter(lokacija + "\\data\\" + "artikal.csv");
-
-                foreach (Artikal artikal in listaArtikala)
-                {
-                    if (!(artikal is Komponenta) && !(artikal is GotovaKonfiguracija) && !(artikal is Procesor) && !(artikal is Memorija))
-                    {
-                        swArtikal.WriteLine(artikal.Save());
-                    }
-                }
-                swArtikal.Close();
-            }
-
-            public void SaveComponent()
-            {
-                StreamWriter swComponent = new StreamWriter(lokacija + "\\data\\" + "komponente.csv");
-
-                foreach (Artikal artikal in listaArtikala)
-                {
-                    if (artikal is Komponenta)
-                    {
-                        Komponenta komponenta = artikal as Komponenta;
-                        swComponent.WriteLine(komponenta.Save());
-                    }
-                }
-                swComponent.Close();
-            }
-
-            public void SaveCategory()
-            {
-                StreamWriter swCategory = new StreamWriter(lokacija + "\\data\\" + "kategorija.csv");
-
-                foreach (Kategorija kategorija in listaKategorija)
-                {
-                    swCategory.WriteLine(kategorija.Save());
-                }
-                swCategory.Close();
-            }
-
-            public void SaveProcessor()
-            {
-                StreamWriter swProcessor = new StreamWriter(lokacija + "\\data\\" + "procesor.csv");
-
-                foreach (Procesor procesor in listaArtikala)
-                {
-                    swProcessor.WriteLine(procesor.Save());
-                }
-                swProcessor.Close();
-            }
-
-            public void SaveMemory()
-            {
-                StreamWriter swMemory = new StreamWriter(lokacija + "\\data\\" + "ramMemorija.csv");
-
-                foreach (Memorija memorija in listaArtikala)
-                {
-                    swMemory.WriteLine(memorija.Save());
-                }
-                swMemory.Close();
-            }
-
-            public void LoadData()
-            {
-                StreamReader swKorisnik = new StreamReader(lokacija + "\\data\\" + "users.csv");
-                StreamReader swKategorija = new StreamReader(lokacija + "\\data\\" + "kategorija.csv");
-                StreamReader swArtikal = new StreamReader(lokacija + "\\data\\" + "artikal.csv");
-                StreamReader swKomponenta = new StreamReader(lokacija + "\\data\\" + "komponente.csv");
-                StreamReader swProcesor = new StreamReader(lokacija + "\\data\\" + "procesor.csv");
-                StreamReader swMemorija = new StreamReader(lokacija + "\\data\\" + "ramMemorija.csv");
-                StreamReader swKonfiguracija = new StreamReader(lokacija + "\\data\\" + "konfiguracija.csv");
-
-                string user;
-                string kategorija;
-                string artikal;
-                string komponenta;
-                string procesor;
-                string memorija;
-                string konfiguracija;
-
-                while ((user = swKorisnik.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(user))
-                    {
-                        Korisnik korisnik = new Korisnik(user);
-                        listaKorisnika.Add(korisnik);
-                    }
-                }
-
-                while ((kategorija = swKategorija.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(kategorija))
-                    {
-                        Kategorija category = new Kategorija(kategorija);
-                        listaKategorija.Add(category);
-                    }
-                }
-
-
-                while ((artikal = swArtikal.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(artikal))
-                    {
-                        Artikal artical = new Artikal(artikal);
-                        listaArtikala.Add(artical);
-                    }
-                }
-
-                while ((komponenta = swKomponenta.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(komponenta))
-                    {
-                        Komponenta component = new Komponenta(komponenta, listaKategorija);
-                        listaArtikala.Add(component);
-                    }
-                }
-
-                while ((procesor = swProcesor.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(procesor))
-                    {
-                        Procesor processor = new Procesor(procesor, listaKategorija);
-                        listaArtikala.Add(processor);
-                    }
-                }
-
-                while ((memorija = swMemorija.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(memorija))
-                    {
-                        Memorija memory = new Memorija(memorija, listaKategorija);
-                        listaArtikala.Add(memory);
-                    }
-                }
-
-                while ((konfiguracija = swKonfiguracija.ReadLine()) != null)
-                {
-                    if (!string.IsNullOrEmpty(konfiguracija))
-                    {
-                        GotovaKonfiguracija gotovaKonfiguracija = new GotovaKonfiguracija(konfiguracija, listaArtikala);
-                        listaArtikala.Add(gotovaKonfiguracija);
-                    }
-                }
-
-                swArtikal.Close();
-                swKategorija.Close();
-                swKorisnik.Close();
-                swKomponenta.Close();
-                swProcesor.Close();
-                swMemorija.Close();
-                swKonfiguracija.Close();
+                Console.WriteLine("Greska prilikom kreiranja racuna!");
             }
         }
+
+        public void SaveArtikal()
+        {
+            StreamWriter swArtikal = new StreamWriter(lokacija + "\\data\\" + "artikal.csv");
+
+            foreach (Artikal artikal in listaArtikala)
+            {
+                if (!(artikal is Komponenta) && !(artikal is GotovaKonfiguracija) && !(artikal is Procesor) && !(artikal is Memorija))
+                {
+                    swArtikal.WriteLine(artikal.Save());
+                }
+            }
+            swArtikal.Close();
+        }
+
+        public void SaveComponent()
+        {
+            StreamWriter swComponent = new StreamWriter(lokacija + "\\data\\" + "komponente.csv");
+
+            foreach (Artikal artikal in listaArtikala)
+            {
+                if (artikal is Komponenta)
+                {
+                    Komponenta komponenta = artikal as Komponenta;
+                    swComponent.WriteLine(komponenta.Save());
+                }
+            }
+            swComponent.Close();
+        }
+
+        public void SaveCategory()
+        {
+            StreamWriter swCategory = new StreamWriter(lokacija + "\\data\\" + "kategorija.csv");
+
+            foreach (Kategorija kategorija in listaKategorija)
+            {
+                swCategory.WriteLine(kategorija.Save());
+            }
+            swCategory.Close();
+        }
+
+        public void SaveProcessor()
+        {
+            StreamWriter swProcessor = new StreamWriter(lokacija + "\\data\\" + "procesor.csv");
+
+            foreach (Artikal procesor in listaArtikala)
+            {
+                if (procesor is Procesor)
+                {
+                    Procesor proc = procesor as Procesor;
+                    swProcessor.WriteLine(proc.Save());
+                }
+            }
+            swProcessor.Close();
+        }
+
+        public void SaveMemory()
+        {
+            StreamWriter swMemory = new StreamWriter(lokacija + "\\data\\" + "ramMemorija.csv");
+
+            foreach (Artikal memorija in listaArtikala)
+            {
+                if (memorija is Memorija)
+                {
+                    Memorija memory = memorija as Memorija;
+                    swMemory.WriteLine(memory.Save());
+                }
+            }
+            swMemory.Close();
+        }
+
+        public void LoadData()
+        {
+            StreamReader swKorisnik = new StreamReader(lokacija + "\\data\\" + "users.csv");
+            StreamReader swKategorija = new StreamReader(lokacija + "\\data\\" + "kategorija.csv");
+            StreamReader swArtikal = new StreamReader(lokacija + "\\data\\" + "artikal.csv");
+            StreamReader swKomponenta = new StreamReader(lokacija + "\\data\\" + "komponente.csv");
+            StreamReader swProcesor = new StreamReader(lokacija + "\\data\\" + "procesor.csv");
+            StreamReader swMemorija = new StreamReader(lokacija + "\\data\\" + "ramMemorija.csv");
+            StreamReader swKonfiguracija = new StreamReader(lokacija + "\\data\\" + "konfiguracija.csv");
+
+            string user;
+            string kategorija;
+            string artikal;
+            string komponenta;
+            string procesor;
+            string memorija;
+            string konfiguracija;
+
+            while ((user = swKorisnik.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(user))
+                {
+                    Korisnik korisnik = new Korisnik(user);
+                    listaKorisnika.Add(korisnik);
+                }
+            }
+
+            while ((kategorija = swKategorija.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(kategorija))
+                {
+                    Kategorija category = new Kategorija(kategorija);
+                    listaKategorija.Add(category);
+                }
+            }
+
+
+            while ((artikal = swArtikal.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(artikal))
+                {
+                    Artikal artical = new Artikal(artikal);
+                    listaArtikala.Add(artical);
+                }
+            }
+
+            while ((komponenta = swKomponenta.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(komponenta))
+                {
+                    Komponenta component = new Komponenta(komponenta, listaKategorija);
+                    listaArtikala.Add(component);
+                }
+            }
+
+            while ((procesor = swProcesor.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(procesor))
+                {
+                    Procesor processor = new Procesor(procesor, listaKategorija);
+                    listaArtikala.Add(processor);
+                }
+            }
+
+            while ((memorija = swMemorija.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(memorija))
+                {
+                    Memorija memory = new Memorija(memorija, listaKategorija);
+                    listaArtikala.Add(memory);
+                }
+            }
+
+            while ((konfiguracija = swKonfiguracija.ReadLine()) != null)
+            {
+                if (!string.IsNullOrEmpty(konfiguracija))
+                {
+                    GotovaKonfiguracija gotovaKonfiguracija = new GotovaKonfiguracija(konfiguracija, listaArtikala);
+                    listaArtikala.Add(gotovaKonfiguracija);
+                }
+            }
+
+            swArtikal.Close();
+            swKategorija.Close();
+            swKorisnik.Close();
+            swKomponenta.Close();
+            swProcesor.Close();
+            swMemorija.Close();
+            swKonfiguracija.Close();
+        }
     }
+}
