@@ -26,7 +26,7 @@ namespace Prodavnica_Racunara.Models
 
         public Kategorija Kategorija;
 
-        public string Save()
+        public virtual string Save()
         {
             string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra;
             return data;

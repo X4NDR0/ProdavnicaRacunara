@@ -27,7 +27,7 @@ namespace Prodavnica_Racunara.Models
 
         public int Kapacitet;
 
-        public string Save()
+        public override string Save()
         {
             string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra + ";" + Kapacitet;
             return data;

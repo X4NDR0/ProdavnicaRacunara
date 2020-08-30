@@ -29,7 +29,7 @@ namespace Prodavnica_Racunara.Models
         public double RadniTakt;
         public int BrojJezgra;
 
-        public string Save()
+        public override string Save()
         {
             string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra + ";" + RadniTakt + ";" + BrojJezgra;
             return data;

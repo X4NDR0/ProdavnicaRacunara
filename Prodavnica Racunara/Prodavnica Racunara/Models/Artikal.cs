@@ -35,7 +35,7 @@ namespace Prodavnica_Racunara.Models
         public Status Status;
         public string Opis;
 
-        public string Save()
+        public virtual string Save()
         {
             string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina  + ";" + Opis + ";" + Status.ToString();
             return data;

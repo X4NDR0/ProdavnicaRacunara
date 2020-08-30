@@ -440,7 +440,10 @@ namespace Prodavnica_Racunara.Services
 
         public void WriteAllArticals(Artikal artikalData)
         {
-            Console.WriteLine(artikalData.Sifra + " " + artikalData.Naziv + " " + artikalData.Cena + " " + artikalData.Kolicina + " " + artikalData.Opis);
+            if (artikalData is Artikal)
+            {
+                Console.WriteLine(artikalData.Sifra + " " + artikalData.Naziv + " " + artikalData.Cena + " " + artikalData.Kolicina + " " + artikalData.Opis);
+            }
         }
 
         public void WriteAllCategory()
@@ -472,9 +475,9 @@ namespace Prodavnica_Racunara.Services
 
         public void WriteAllProcessors(Artikal artikal)
         {
-            Procesor procesor = artikal as Procesor;
             if (!(artikal is Memorija))
             {
+                Procesor procesor = artikal as Procesor;
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 Console.Write("Sifra:" + procesor.Sifra + "\nNaziv:" + procesor.Naziv + "\nCena:" + procesor.Cena + "\nKolicina:" + procesor.Kolicina + "\nNaziv kategorije:" + procesor.Kategorija.Naziv + "\nOpis:" + procesor.Opis + "\nRadni takt:" + procesor.RadniTakt + "\nBroj jezgara:" + procesor.BrojJezgra + "\n");
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
@@ -544,6 +547,14 @@ namespace Prodavnica_Racunara.Services
                 else if (artikal is Artikal && artikal.Status.Equals(Status.Obrisan))
                 {
                     WriteAllArticals(artikal);
+                }
+                else if (artikal is Procesor && artikal.Status.Equals(Status.Obrisan))
+                {
+                    WriteAllProcessors(artikal);
+                }
+                else if (artikal is Memorija && artikal.Status.Equals(Status.Obrisan))
+                {
+                    WriteAllMemory(artikal);
                 }
             }
         }
@@ -971,7 +982,7 @@ namespace Prodavnica_Racunara.Services
                 {
                     artikalKonfiguracija.Status = Status.Obrisan;
                     Console.Clear();
-                    Console.WriteLine("Konfiguracija je uspesno dodata!");
+                    Console.WriteLine("Konfiguracija je uspesno obrisana!");
                 }
             }
 
@@ -1478,7 +1489,7 @@ namespace Prodavnica_Racunara.Services
 
             foreach (Artikal artikal in listaArtikala)
             {
-                if (artikal is Komponenta)
+                if (artikal is Komponenta && !(artikal is Memorija) && !(artikal is Procesor) && !(artikal is GotovaKonfiguracija))
                 {
                     Komponenta komponenta = artikal as Komponenta;
                     swComponent.WriteLine(komponenta.Save());
