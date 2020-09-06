@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace Prodavnica_Racunara.Models
@@ -45,5 +47,25 @@ namespace Prodavnica_Racunara.Models
         }
 
         public List<Komponenta> ListaKomponenata;
+
+        public override string Save()
+        {
+            string data = string.Empty;
+            string id = string.Empty;
+
+            for (int i = 0; i < ListaKomponenata.Count; i++)
+            {
+                id += ListaKomponenata[i].Sifra + ",";
+            }
+
+            if (id.EndsWith(","))
+            {
+                id = id.Remove(id.Length - 1, 1);
+            }
+
+            data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + id;
+
+            return data;
+        }
     }
 }
