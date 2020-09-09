@@ -6,10 +6,12 @@ namespace Prodavnica_Racunara.Utils
 {
     public class Helper
     {
+        public static int IDArtikal = 0;
+        
         public int ProveraInt()
         {
             int broj;
-            while (int.TryParse(Console.ReadLine(),out broj) == false)
+            while (int.TryParse(Console.ReadLine(), out broj) == false)
             {
                 Console.Write("Pogresan unos,pokusajte ponovo:");
             }
@@ -19,7 +21,7 @@ namespace Prodavnica_Racunara.Utils
         public double ProveraDouble()
         {
             double broj;
-            while (double.TryParse(Console.ReadLine(),out broj) == false)
+            while (double.TryParse(Console.ReadLine(), out broj) == false)
             {
                 Console.Write("Pogresan unos,pokusajte ponovo:");
             }

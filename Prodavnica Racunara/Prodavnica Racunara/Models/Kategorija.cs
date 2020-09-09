@@ -1,4 +1,6 @@
-﻿namespace Prodavnica_Racunara.Models
+﻿using Prodavnica_Racunara.Utils;
+
+namespace Prodavnica_Racunara.Models
 {
     class Kategorija
     {

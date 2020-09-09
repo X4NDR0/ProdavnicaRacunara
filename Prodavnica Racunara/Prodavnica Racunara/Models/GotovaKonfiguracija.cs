@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prodavnica_Racunara.Utils;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -25,17 +26,15 @@ namespace Prodavnica_Racunara.Models
 
             string[] idOfTheComponents = podaci[6].Split(",");
 
-            List<Komponenta> listaKomponenataAdd = new List<Komponenta>(); ;
+            List<Artikal> listaKomponenataAdd = new List<Artikal>(); ;
 
             for (int i = 0; i < idOfTheComponents.Length; i++)
             {
                 Artikal komponentaLoad = listaArtikla.Where(x => x.Sifra == Convert.ToInt32(idOfTheComponents[i])).FirstOrDefault();
 
-                Komponenta komponentaConvert = komponentaLoad as Komponenta;
-
-                if (komponentaConvert != null)
+                if (komponentaLoad != null)
                 {
-                    listaKomponenataAdd.Add(komponentaConvert);
+                    listaKomponenataAdd.Add(komponentaLoad);
                 }
                 else
                 {
@@ -46,7 +45,7 @@ namespace Prodavnica_Racunara.Models
             ListaKomponenata = listaKomponenataAdd;
         }
 
-        public List<Komponenta> ListaKomponenata;
+        public List<Artikal> ListaKomponenata;
 
         public override string Save()
         {
