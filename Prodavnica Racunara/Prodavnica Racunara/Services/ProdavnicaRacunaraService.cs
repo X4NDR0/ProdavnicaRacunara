@@ -620,19 +620,19 @@ namespace Prodavnica_Racunara.Services
             {
                 if (artikal is GotovaKonfiguracija && artikal.Status == Status.Aktivan)
                 {
-                    Console.WriteLine("=================================");
+                    Console.WriteLine("=============Konfiguracije==============");
                     WriteAllConfiguration(artikal);
-                    Console.WriteLine("=================================");
-                }
-                else if (artikal is Komponenta && artikal.Status == Status.Aktivan)
-                {
-                    Console.WriteLine("=================================");
-                    WriteAllComponents(artikal);
                     Console.WriteLine("=================================");
                 }
                 else if (artikal is Artikal && artikal.Status == Status.Aktivan)
                 {
+                    Console.WriteLine("===============Artikli==================");
+                    WriteAllComponents(artikal);
                     Console.WriteLine("=================================");
+                }
+                else if (artikal is Komponenta && artikal.Status == Status.Aktivan)
+                {
+                    Console.WriteLine("===============Komponente==================");
                     WriteAllArticals(artikal);
                     Console.WriteLine("=================================");
                 }
@@ -949,7 +949,7 @@ namespace Prodavnica_Racunara.Services
         public void DeleteArtical()
         {
             Console.Clear();
-
+            
             foreach (Artikal artikal in listaArtikala)
             {
                 if (artikal is Artikal && artikal.Status == Status.Aktivan)
