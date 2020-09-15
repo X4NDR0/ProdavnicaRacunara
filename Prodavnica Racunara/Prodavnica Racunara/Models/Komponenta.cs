@@ -1,4 +1,5 @@
-﻿using Prodavnica_Racunara.Utils;
+﻿using Prodavnica_Racunara.Enums;
+using Prodavnica_Racunara.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,14 @@ namespace Prodavnica_Racunara.Models
             int.TryParse(podaci[3], out Kolicina);
             Opis = podaci[4];
             Enum.TryParse(podaci[5], out Status);
-            Kategorija kategorija = listaKategorija.Where(x => x.Sifra == Convert.ToInt32(podaci[6])).FirstOrDefault();
-            Kategorija = kategorija;
+            Enum.TryParse(podaci[6], out Kategorija.kategorijaEnum);
         }
 
         public Kategorija Kategorija;
 
         public virtual string Save()
         {
-            string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra;
+            string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.kategorijaEnum;
             return data;
         }
     }

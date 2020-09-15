@@ -36,6 +36,8 @@
         Kupi = 25,
         Naplati = 26,
 
+        PregledSvihRacunaBezStavki = 27,
+
         Exit = 0
     }
 }
