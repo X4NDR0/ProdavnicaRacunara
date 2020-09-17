@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace Prodavnica_Racunara.Services
 {
@@ -661,7 +660,6 @@ namespace Prodavnica_Racunara.Services
         {
             Console.Clear();
 
-            int sifraAdd = ++Helper.IDArtikal;
 
             Console.Clear();
 
@@ -685,7 +683,7 @@ namespace Prodavnica_Racunara.Services
 
             Console.Clear();
 
-            Artikal artikalAdd = new Artikal { Sifra = sifraAdd, Naziv = nazivAdd, Cena = cenaAdd, Kolicina = kolicinaAdd, Opis = opisAdd, Status = Status.Aktivan };
+            Artikal artikalAdd = new Artikal { Sifra = ++Helper.IDArtikal, Naziv = nazivAdd, Cena = cenaAdd, Kolicina = kolicinaAdd, Opis = opisAdd, Status = Status.Aktivan };
 
             listaArtikala.Add(artikalAdd);
 
@@ -694,7 +692,7 @@ namespace Prodavnica_Racunara.Services
             Console.WriteLine("Uspesno ste dodali artikal!");
         }
 
-        public void AddProcessorByCategory(int sifra, string naziv, double cena, int kolicina, string opis, Kategorija kategorija)
+        public void AddProcessorByCategory(string naziv, double cena, int kolicina, string opis, Kategorija kategorija)
         {
             Console.Clear();
             Console.Write("Unesite radni takt procesora:");
@@ -703,7 +701,7 @@ namespace Prodavnica_Racunara.Services
             Console.Write("Unesite broj jezgra:");
             int.TryParse(Console.ReadLine(), out int brojJezgra);
 
-            Procesor procesorAdd = new Procesor { Sifra = sifra, Naziv = naziv, Cena = cena, Kolicina = kolicina, Opis = opis, Kategorija = kategorija, RadniTakt = radniTakt, BrojJezgra = brojJezgra, Status = Status.Aktivan };
+            Procesor procesorAdd = new Procesor { Sifra = ++Helper.IDArtikal, Naziv = naziv, Cena = cena, Kolicina = kolicina, Opis = opis, Kategorija = kategorija, RadniTakt = radniTakt, BrojJezgra = brojJezgra, Status = Status.Aktivan };
             listaArtikala.Add(procesorAdd);
             SaveProcessor();
 
@@ -711,13 +709,22 @@ namespace Prodavnica_Racunara.Services
             Console.WriteLine("Procesor je uspesno dodat!");
         }
 
-        public void AddComponent()
+        public void AddMemoryByCategory(string naziv, double cena, int kolicina, string opis, Kategorija kategorija)
         {
             Console.Clear();
+            Console.Write("Unesite kapacitet memorije:");
+            int.TryParse(Console.ReadLine(), out int kapacitet);
 
-            Console.Write("Unesite sifru:");
-            int sifraKomponente = ++Helper.IDArtikal;
+            Memorija memorijaAdd = new Memorija { Sifra = ++Helper.IDArtikal, Naziv = naziv, Cena = cena, Kolicina = kolicina, Opis = opis, Kategorija = kategorija, Kapacitet = kapacitet, Status = Status.Aktivan };
+            listaArtikala.Add(memorijaAdd);
+            SaveMemory();
 
+            Console.Clear();
+            Console.WriteLine("Memorija je uspesno dodata!");
+        }
+
+        public void AddComponent()
+        {
             Console.Clear();
 
             Console.Write("Unesite naziv:");
@@ -754,15 +761,15 @@ namespace Prodavnica_Racunara.Services
                 switch (kategorije)
                 {
                     case Kategorije.Procesor:
-                        AddProcessorByCategory(sifraKomponente, nazivKomponente, cenaKomponente, kolicinaKomponente, opisKomponente, kategorijaSelect);
+                        AddProcessorByCategory(nazivKomponente, cenaKomponente, kolicinaKomponente, opisKomponente, kategorijaSelect);
                         break;
 
                     case Kategorije.Memorija:
-
+                        AddMemoryByCategory(nazivKomponente, cenaKomponente, kolicinaKomponente, opisKomponente, kategorijaSelect);
                         break;
 
                     default:
-                        Komponenta komponentaAdd = new Komponenta { Sifra = sifraKomponente, Cena = cenaKomponente, Kolicina = kolicinaKomponente, Naziv = nazivKomponente, Opis = opisKomponente, Kategorija = kategorijaSelect, Status = Status.Aktivan };
+                        Komponenta komponentaAdd = new Komponenta { Sifra = ++Helper.IDArtikal, Cena = cenaKomponente, Kolicina = kolicinaKomponente, Naziv = nazivKomponente, Opis = opisKomponente, Kategorija = kategorijaSelect, Status = Status.Aktivan };
                         listaArtikala.Add(komponentaAdd);
                         SaveComponent();
                         Console.Clear();
@@ -779,8 +786,6 @@ namespace Prodavnica_Racunara.Services
         public void AddConfiguration()
         {
             Console.Clear();
-
-            int sifraKonfiguracije = ++Helper.IDArtikal;
 
             Console.Clear();
 
@@ -824,7 +829,7 @@ namespace Prodavnica_Racunara.Services
 
             } while (sifreKomponenata != 0);
 
-            GotovaKonfiguracija gotovaKonfiguracija = new GotovaKonfiguracija { Sifra = sifraKonfiguracije, Naziv = nazivKonfiguracije, Cena = cenaKonfiguracije, Kolicina = kolicinaKonfiguracije, Opis = opisKonfiguracije, Status = Status.Aktivan, ListaKomponenata = listaArtikalaAdd };
+            GotovaKonfiguracija gotovaKonfiguracija = new GotovaKonfiguracija { Sifra = ++Helper.IDArtikal, Naziv = nazivKonfiguracije, Cena = cenaKonfiguracije, Kolicina = kolicinaKonfiguracije, Opis = opisKonfiguracije, Status = Status.Aktivan, ListaKomponenata = listaArtikalaAdd };
             listaArtikala.Add(gotovaKonfiguracija);
 
             SaveConfiguration();
@@ -835,10 +840,7 @@ namespace Prodavnica_Racunara.Services
         {
             Console.Clear();
 
-            Console.Write("Unesite sifru:");
-            int sifraKategorije = ++Helper.IDArtikal;
-
-            Console.Clear();
+            int sifraKategorije = listaKategorija.Max(x => (int)x.kategorijaEnum) + 1;
 
             Console.Write("Unesite naziv:");
             string nazivKategorije = Console.ReadLine();
@@ -850,6 +852,9 @@ namespace Prodavnica_Racunara.Services
 
             Console.Clear();
 
+            Kategorije kategorije = (Kategorije)sifraKategorije;
+            //kategorije.ToString() = nazivKategorije;
+
             //FIX
             Kategorija kategorijaAdd = new Kategorija { Opis = opisKategorije };
 
@@ -860,97 +865,6 @@ namespace Prodavnica_Racunara.Services
             Console.WriteLine("Uspesno ste dodali kategoriju!");
         }
 
-        public void AddProcesor()
-        {
-            Console.Clear();
-
-            Console.Write("Unesite sifru:");
-            int sifraProcesora = ++Helper.IDArtikal;
-
-            Console.Clear();
-
-            Console.Write("Unesite naziv:");
-            string nazivProcesora = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write("Unesite cenu:");
-            double.TryParse(Console.ReadLine(), out double cenaProcesora);
-
-            Console.Clear();
-
-            Console.Write("Unesite kolicinu:");
-            int.TryParse(Console.ReadLine(), out int kolicinaProcesora);
-
-            Console.Clear();
-
-            Console.Write("Unesite opis:");
-            string opisProcesora = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write("Unesite radni takt:");
-            double.TryParse(Console.ReadLine(), out double radniTakt);
-
-            Console.Clear();
-
-            Console.Write("Unesite broj jezgara:");
-            int.TryParse(Console.ReadLine(), out int brojJezgra);
-
-            Kategorija kategorijaAdd = listaKategorija.Where(x => x.kategorijaEnum == Kategorije.Procesor).FirstOrDefault();
-            Procesor procesorAdd = new Procesor { Sifra = sifraProcesora, Naziv = nazivProcesora, Cena = cenaProcesora, Kolicina = kolicinaProcesora, Opis = opisProcesora, RadniTakt = radniTakt, BrojJezgra = brojJezgra, Status = Status.Aktivan, Kategorija = kategorijaAdd };
-
-            listaArtikala.Add(procesorAdd);
-
-            SaveProcessor();
-
-            Console.Clear();
-            Console.WriteLine("Procesor je uspesno dodat!");
-        }
-
-        public void AddMemory()
-        {
-            Console.Clear();
-
-            Console.Write("Unesite sifru:");
-            int sifraMemorije = ++Helper.IDArtikal;
-
-            Console.Clear();
-
-            Console.Write("Unesite naziv:");
-            string nazivMemorije = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write("Unesite cenu:");
-            double.TryParse(Console.ReadLine(), out double cenaMemorije);
-
-            Console.Clear();
-
-            Console.Write("Unesite kolicinu:");
-            int.TryParse(Console.ReadLine(), out int kolicinaMemorije);
-
-            Console.Clear();
-
-            Console.Write("Unesite opis:");
-            string opisMemorije = Console.ReadLine();
-
-            Console.Clear();
-
-            Console.Write("Unesite kapacitet:");
-            int.TryParse(Console.ReadLine(), out int kapacitet);
-
-            Console.Clear();
-
-            //Kategorija kategorijaAdd = listaKategorija.Where(x => x.kategorijaEnum == Kategorije.Memorija).FirstOrDefault();
-            //Memorija memorijaAdd = new Memorija { Sifra = sifraMemorije, Naziv = nazivMemorije, Cena = cenaMemorije, Kolicina = kolicinaMemorije, Opis = opisMemorije, Kapacitet = kapacitet, Status = Status.Aktivan, Kategorija = kategorijaAdd };
-
-            //listaArtikala.Add(memorijaAdd);
-
-            SaveMemory();
-
-            Console.WriteLine("Memorija je uspesno dodata!");
-        }
 
         public void AddEntity()
         {
@@ -958,8 +872,6 @@ namespace Prodavnica_Racunara.Services
             Console.WriteLine("2.Dodaj komponentu");
             Console.WriteLine("3.Dodaj gotovu konfiguraciju");
             Console.WriteLine("4.Dodaj kategoriju");
-            Console.WriteLine("5.Dodaj procesor");
-            Console.WriteLine("6.Dodaj memoriju");
 
             Console.Write("Option:");
             int.TryParse(Console.ReadLine(), out int opcija);
@@ -980,14 +892,6 @@ namespace Prodavnica_Racunara.Services
 
                 case 4:
                     AddCategory();
-                    break;
-
-                case 5:
-                    AddProcesor();
-                    break;
-
-                case 6:
-                    AddMemory();
                     break;
 
                 default:

@@ -10,6 +10,8 @@ namespace Prodavnica_Racunara.Models
         {
 
         }
+       
+
         public Artikal(string data)
         {
             string[] podaci = data.Split(';');

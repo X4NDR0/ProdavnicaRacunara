@@ -22,7 +22,7 @@ namespace Prodavnica_Racunara.Models
             int.TryParse(podaci[3], out Kolicina);
             Opis = podaci[4];
             Enum.TryParse(podaci[5], out Status);
-            Enum.TryParse(podaci[6], out Kategorija.kategorijaEnum);
+            Kategorija = listaKategorija.Where(x => x.kategorijaEnum.ToString().Equals(podaci[6])).FirstOrDefault();
             int.TryParse(podaci[7], out Kapacitet);
         }
 

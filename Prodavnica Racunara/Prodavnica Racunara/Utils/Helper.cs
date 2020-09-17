@@ -6,7 +6,7 @@ namespace Prodavnica_Racunara.Utils
 {
     public class Helper
     {
-        public static int IDArtikal = 0;
+        public static int IDArtikal;
         
         public int ProveraInt()
         {
