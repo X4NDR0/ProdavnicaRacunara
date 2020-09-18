@@ -743,24 +743,20 @@ namespace Prodavnica_Racunara.Services
 
             WriteAllCategory();
 
-            Kategorije kategorije;
-
             Console.Write("Unesite sifru kategorije:");
-            Enum.TryParse(Console.ReadLine(), out kategorije);
-
             int.TryParse(Console.ReadLine(), out int kategorijaID);
 
             Kategorija kategorijaSelect = listaKategorija.Where(x => x.Sifra == kategorijaID).FirstOrDefault();
 
             if (kategorijaSelect != null)
             {
-                switch (kategorije)
+                switch (kategorijaID)
                 {
-                    case Kategorije.Procesor:
+                    case 3381:
                         AddProcessorByCategory(nazivKomponente, cenaKomponente, kolicinaKomponente, opisKomponente, kategorijaSelect);
                         break;
 
-                    case Kategorije.Memorija:
+                    case 2991:
                         AddMemoryByCategory(nazivKomponente, cenaKomponente, kolicinaKomponente, opisKomponente, kategorijaSelect);
                         break;
 
