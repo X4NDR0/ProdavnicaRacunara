@@ -1,8 +1,4 @@
-﻿using Prodavnica_Racunara.Enums;
-using Prodavnica_Racunara.Utils;
-using System;
-
-namespace Prodavnica_Racunara.Models
+﻿namespace Prodavnica_Racunara.Models
 {
     class Kategorija
     {
@@ -14,16 +10,18 @@ namespace Prodavnica_Racunara.Models
         public Kategorija(string data)
         {
             string[] podaci = data.Split(';');
-            Enum.TryParse(podaci[0], out kategorijaEnum);
-            Opis = podaci[1];
+            int.TryParse(podaci[0], out Sifra);
+            Naziv = podaci[1];
+            Opis = podaci[2];
         }
 
-        public Kategorije kategorijaEnum;
+        public int Sifra;
+        public string Naziv;
         public string Opis;
 
         public string Save()
         {
-            string data = kategorijaEnum + ";" + Opis;
+            string data = Sifra + ";" + Naziv + ";" + Opis;
             return data;
         }
     }

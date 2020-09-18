@@ -177,34 +177,32 @@ namespace Prodavnica_Racunara.Services
 
         public void WriteCategoryByID()
         {
-            Kategorije kategorije;
             Console.Write("Unesite sifru kategorije:");
-            Enum.TryParse(Console.ReadLine(), out kategorije);
+            int.TryParse(Console.ReadLine(), out int sifra);
 
             Console.Clear();
 
             foreach (Kategorija kategorija in listaKategorija)
             {
-                if ((int)kategorija.kategorijaEnum == (int)kategorije)
+                if (kategorija.Sifra == sifra)
                 {
-                    Console.WriteLine((int)kategorija.kategorijaEnum + " " + kategorija.kategorijaEnum + " " + kategorija.Opis); ;
+                    Console.WriteLine(kategorija.Sifra + " " + kategorija.Naziv + " " + kategorija.Opis);
                 }
             }
         }
 
         public void WriteCategoryByName()
         {
-            Kategorije kategorije;
             Console.Write("Unesite naziv kategorije:");
-            Enum.TryParse(Console.ReadLine(), out kategorije);
+            string naziv = Console.ReadLine();
 
             Console.Clear();
 
             foreach (Kategorija kategorija in listaKategorija)
             {
-                if (kategorija.kategorijaEnum.Equals(kategorije))
+                if (kategorija.Naziv.Equals(naziv))
                 {
-                    Console.WriteLine((int)kategorija.kategorijaEnum + " " + kategorije.ToString() + " " + kategorija.Opis);
+                    Console.WriteLine(kategorija.Sifra + " " + kategorija.Naziv + " " + kategorija.Opis);
                 }
             }
         }
@@ -328,7 +326,7 @@ namespace Prodavnica_Racunara.Services
                 if (komponenta.Sifra == sifra && komponenta is Komponenta && !(komponenta is Memorija) && !(komponenta is GotovaKonfiguracija) && !(komponenta is Procesor))
                 {
                     Komponenta component = komponenta as Komponenta;
-                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.kategorijaEnum + "\nOpis:" + component.Opis + "\n");
+                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                 }
             }
         }
@@ -345,7 +343,7 @@ namespace Prodavnica_Racunara.Services
                 if (komponenta.Naziv.Contains(naziv) && komponenta is Komponenta && !(komponenta is Memorija) && !(komponenta is Procesor))
                 {
                     Komponenta component = komponenta as Komponenta;
-                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.kategorijaEnum + "\nOpis:" + component.Opis + "\n");
+                    Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                 }
             }
         }
@@ -369,7 +367,7 @@ namespace Prodavnica_Racunara.Services
                     Komponenta component = komponenta as Komponenta;
                     if (component.Cena >= odCene && component.Cena <= doCene && !(komponenta is Memorija) && !(komponenta is Procesor))
                     {
-                        Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.kategorijaEnum + "\nOpis:" + component.Opis + "\n");
+                        Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                     }
                 }
             }
@@ -394,8 +392,7 @@ namespace Prodavnica_Racunara.Services
                 {
                     if (komponenta.Kolicina >= odKolicine && komponenta.Kolicina <= doKolicine && !(komponenta is Memorija) && !(komponenta is Procesor))
                     {
-                        Komponenta component = komponenta as Komponenta;
-                        Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.kategorijaEnum + "\nOpis:" + component.Opis + "\n"); ;
+                        Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Naziv + "\nOpis:" + komponenta.Opis + "\n");
                     }
                 }
             }
@@ -414,11 +411,9 @@ namespace Prodavnica_Racunara.Services
             switch (opcija)
             {
                 case 1:
-                    Kategorije kategorije;
                     Console.Clear();
-
                     Console.Write("Unesite sifru kategorije:");
-                    Enum.TryParse(Console.ReadLine(), out kategorije);
+                    int.TryParse(Console.ReadLine(), out int sifra);
 
                     Console.Clear();
 
@@ -427,20 +422,19 @@ namespace Prodavnica_Racunara.Services
                         if (komponenta is Komponenta)
                         {
                             Komponenta component = komponenta as Komponenta;
-                            if ((int)component.Kategorija.kategorijaEnum == (int)kategorije)
+                            if (component.Kategorija.Sifra == sifra)
                             {
-                                Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.kategorijaEnum + "\nOpis:" + component.Opis + "\n");
+                                Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                             }
                         }
                     }
                     break;
 
                 case 2:
-                    Kategorije kategorijee;
                     Console.Clear();
 
                     Console.Write("Unesite naziv kategorije:");
-                    Enum.TryParse(Console.ReadLine(), out kategorijee);
+                    string naziv = Console.ReadLine();
 
                     Console.Clear();
 
@@ -449,9 +443,9 @@ namespace Prodavnica_Racunara.Services
                         if (komponenta is Komponenta)
                         {
                             Komponenta component = komponenta as Komponenta;
-                            if (component.Kategorija.kategorijaEnum.Equals(kategorijee))
+                            if (component.Kategorija.Naziv.Equals(naziv))
                             {
-                                Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.kategorijaEnum + "\nOpis:" + component.Opis + "\n");
+                                Console.Write("Sifra:" + component.Sifra + "\nNaziv:" + component.Naziv + "\nCena:" + component.Cena + "\nKolicina:" + component.Kolicina + "\nNaziv kategorije:" + component.Kategorija.Naziv + "\nOpis:" + component.Opis + "\n");
                             }
                         }
                     }
@@ -475,7 +469,7 @@ namespace Prodavnica_Racunara.Services
             foreach (Kategorija kategorija in listaKategorija)
             {
                 Console.WriteLine("================Kategorije=================");
-                Console.WriteLine((int)kategorija.kategorijaEnum + " " + kategorija.kategorijaEnum + " " + kategorija.Opis);
+                Console.WriteLine(kategorija.Sifra + " " + kategorija.Naziv + " " + kategorija.Opis);
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             }
         }
@@ -492,7 +486,7 @@ namespace Prodavnica_Racunara.Services
             if (!(artikal is Procesor) && !(artikal is Memorija))
             {
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.kategorijaEnum + "\nOpis:" + komponenta.Opis + "\n");
+                Console.Write("Sifra:" + komponenta.Sifra + "\nNaziv:" + komponenta.Naziv + "\nCena:" + komponenta.Cena + "\nKolicina:" + komponenta.Kolicina + "\nNaziv kategorije:" + komponenta.Kategorija.Naziv + "\nOpis:" + komponenta.Opis + "\n");
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             }
         }
@@ -503,7 +497,7 @@ namespace Prodavnica_Racunara.Services
             {
                 Procesor procesor = artikal as Procesor;
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                Console.Write("Sifra:" + procesor.Sifra + "\nNaziv:" + procesor.Naziv + "\nCena:" + procesor.Cena + "\nKolicina:" + procesor.Kolicina + "\nNaziv kategorije:" + procesor.Kategorija.kategorijaEnum + "\nOpis:" + procesor.Opis + "\nRadni takt:" + procesor.RadniTakt + "\nBroj jezgara:" + procesor.BrojJezgra + "\n");
+                Console.Write("Sifra:" + procesor.Sifra + "\nNaziv:" + procesor.Naziv + "\nCena:" + procesor.Cena + "\nKolicina:" + procesor.Kolicina + "\nNaziv kategorije:" + procesor.Kategorija.Naziv + "\nOpis:" + procesor.Opis + "\nRadni takt:" + procesor.RadniTakt + "\nBroj jezgara:" + procesor.BrojJezgra + "\n");
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             }
         }
@@ -514,7 +508,7 @@ namespace Prodavnica_Racunara.Services
             if (!(artikal is Procesor))
             {
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                Console.Write("Sifra:" + memorija.Sifra + "\nNaziv:" + memorija.Naziv + "\nCena:" + memorija.Cena + "\nKolicina:" + memorija.Kolicina + "\nNaziv kategorije:" + memorija.Kategorija.kategorijaEnum + "\nOpis:" + memorija.Opis + "\nKapacitet:" + memorija.Kapacitet + "\n");
+                Console.Write("Sifra:" + memorija.Sifra + "\nNaziv:" + memorija.Naziv + "\nCena:" + memorija.Cena + "\nKolicina:" + memorija.Kolicina + "\nNaziv kategorije:" + memorija.Kategorija.Naziv + "\nOpis:" + memorija.Opis + "\nKapacitet:" + memorija.Kapacitet + "\n");
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
             }
         }
@@ -754,7 +748,9 @@ namespace Prodavnica_Racunara.Services
             Console.Write("Unesite sifru kategorije:");
             Enum.TryParse(Console.ReadLine(), out kategorije);
 
-            Kategorija kategorijaSelect = listaKategorija.Where(x => x.kategorijaEnum == kategorije).FirstOrDefault();
+            int.TryParse(Console.ReadLine(), out int kategorijaID);
+
+            Kategorija kategorijaSelect = listaKategorija.Where(x => x.Sifra == kategorijaID).FirstOrDefault();
 
             if (kategorijaSelect != null)
             {
@@ -840,7 +836,7 @@ namespace Prodavnica_Racunara.Services
         {
             Console.Clear();
 
-            int sifraKategorije = listaKategorija.Max(x => (int)x.kategorijaEnum) + 1;
+            int.TryParse(Console.ReadLine(), out int sifraKategorije);
 
             Console.Write("Unesite naziv:");
             string nazivKategorije = Console.ReadLine();
@@ -852,11 +848,7 @@ namespace Prodavnica_Racunara.Services
 
             Console.Clear();
 
-            Kategorije kategorije = (Kategorije)sifraKategorije;
-            //kategorije.ToString() = nazivKategorije;
-
-            //FIX
-            Kategorija kategorijaAdd = new Kategorija { Opis = opisKategorije };
+            Kategorija kategorijaAdd = new Kategorija { Sifra = sifraKategorije, Naziv = nazivKategorije, Opis = opisKategorije };
 
             listaKategorija.Add(kategorijaAdd);
 

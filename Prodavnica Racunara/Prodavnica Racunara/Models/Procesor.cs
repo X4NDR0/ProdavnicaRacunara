@@ -22,7 +22,8 @@ namespace Prodavnica_Racunara.Models
             int.TryParse(podaci[3], out Kolicina);
             Opis = podaci[4];
             Enum.TryParse(podaci[5], out Status);
-            Kategorija = listaKategorija.Where(x => x.kategorijaEnum.ToString().Equals(podaci[6])).FirstOrDefault();
+            Kategorija kategorija = listaKategorija.Where(x => x.Sifra == Convert.ToInt32(podaci[6])).FirstOrDefault();
+            Kategorija = kategorija;
             double.TryParse(podaci[7], out RadniTakt);
             int.TryParse(podaci[8], out BrojJezgra);
         }
@@ -33,7 +34,7 @@ namespace Prodavnica_Racunara.Models
 
         public override string Save()
         {
-            string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.kategorijaEnum + ";" + RadniTakt + ";" + BrojJezgra;
+            string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra + ";" + RadniTakt + ";" + BrojJezgra;
             return data;
         }
     }
