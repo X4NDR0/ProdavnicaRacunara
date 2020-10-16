@@ -10,7 +10,6 @@ namespace Prodavnica_Racunara.Models
         {
 
         }
-       
 
         public Artikal(string data)
         {
@@ -22,6 +21,7 @@ namespace Prodavnica_Racunara.Models
             }
             else
             {
+                
                 int.TryParse(podaci[0], out Sifra);
                 Naziv = podaci[1];
                 double.TryParse(podaci[2], out Cena);

@@ -37,6 +37,8 @@
         Naplati = 26,
 
         PregledSvihRacunaBezStavki = 27,
+        PregledSvihRacunaPoDatumu = 28,
+        PregledSvihRacunaPoDatumuSS = 29,
 
         Exit = 0
     }
