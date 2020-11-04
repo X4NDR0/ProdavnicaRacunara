@@ -7,13 +7,25 @@ using System.Linq;
 
 namespace Prodavnica_Racunara.Models
 {
+    /// <summary>
+    /// Representing class of "PC Configuration" which inherits class Artical
+    /// </summary>
     class GotovaKonfiguracija : Artikal
     {
+        /// <summary>
+        /// Empty class contructor
+        /// </summary>
         public GotovaKonfiguracija()
         {
 
         }
 
+
+        /// <summary>
+        /// Class constructor with parametars
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="listaArtikla"></param>
         public GotovaKonfiguracija(string data, List<Artikal> listaArtikla)
         {
             string[] podaci = data.Split(';');
@@ -45,8 +57,15 @@ namespace Prodavnica_Racunara.Models
             ListaKomponenata = listaKomponenataAdd;
         }
 
+        /// <summary>
+        /// Representing List of the articals
+        /// </summary>
         public List<Artikal> ListaKomponenata;
 
+        /// <summary>
+        /// Representing method for saving data in csv file
+        /// </summary>
+        /// <returns></returns>
         public override string Save()
         {
             string data = string.Empty;

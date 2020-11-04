@@ -39,6 +39,7 @@
         PregledSvihRacunaBezStavki = 27,
         PregledSvihRacunaPoDatumu = 28,
         PregledSvihRacunaPoDatumuSS = 29,
+        IzvestajProdaje = 30,
 
         Exit = 0
     }

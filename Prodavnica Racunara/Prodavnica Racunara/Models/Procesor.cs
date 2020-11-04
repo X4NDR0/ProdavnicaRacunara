@@ -6,13 +6,24 @@ using System.Linq;
 
 namespace Prodavnica_Racunara.Models
 {
+    /// <summary>
+    /// Representing class Procesor which inherits class component
+    /// </summary>
     class Procesor : Komponenta
     {
+        /// <summary>
+        /// Representing empty class constructor
+        /// </summary>
         public Procesor()
         {
 
         }
 
+        /// <summary>
+        /// Representing constructor with parametars
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="listaKategorija"></param>
         public Procesor(string data, List<Kategorija> listaKategorija)
         {
             string[] podaci = data.Split(';');
@@ -28,10 +39,26 @@ namespace Prodavnica_Racunara.Models
             int.TryParse(podaci[8], out BrojJezgra);
         }
 
+
+        /// <summary>
+        /// Representing category of the procesor
+        /// </summary>
         public Kategorija Kategorija;
+
+        /// <summary>
+        /// Representing frenquency of the procesor
+        /// </summary>
         public double RadniTakt;
+
+        /// <summary>
+        /// Representing core number of the procesor
+        /// </summary>
         public int BrojJezgra;
 
+        /// <summary>
+        /// Representing method which save data in csv file
+        /// </summary>
+        /// <returns></returns>
         public override string Save()
         {
             string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra + ";" + RadniTakt + ";" + BrojJezgra;

@@ -6,13 +6,24 @@ using System.Linq;
 
 namespace Prodavnica_Racunara.Models
 {
+    /// <summary>
+    /// Representing class which inherits class component
+    /// </summary>
     class Memorija : Komponenta
     {
+        /// <summary>
+        /// Representing emtpy constructor of the class
+        /// </summary>
         public Memorija()
         {
 
         }
 
+        /// <summary>
+        /// Representing constructor with parametars
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="listaKategorija"></param>
         public Memorija(string data, List<Kategorija> listaKategorija)
         {
             string[] podaci = data.Split(';');
@@ -26,9 +37,20 @@ namespace Prodavnica_Racunara.Models
             int.TryParse(podaci[7], out Kapacitet);
         }
 
+        /// <summary>
+        /// Representing object category of the memory
+        /// </summary>
         public Kategorija Kategorija;
+
+        /// <summary>
+        /// Representing memory size of the memory
+        /// </summary>
         public int Kapacitet;
 
+        /// <summary>
+        /// Representing method which save data in csv file
+        /// </summary>
+        /// <returns></returns>
         public override string Save()
         {
             string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString() + ";" + Kategorija.Sifra + ";" + Kapacitet;

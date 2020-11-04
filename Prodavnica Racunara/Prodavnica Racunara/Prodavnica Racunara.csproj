@@ -6,6 +6,11 @@
     <RootNamespace>Prodavnica_Racunara</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Update="data\artikal.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
