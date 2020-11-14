@@ -1,5 +1,4 @@
 ﻿using Prodavnica_Racunara.Enums;
-using Prodavnica_Racunara.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing class which inherits artikal
     /// </summary>
-    class Komponenta : Artikal
+    public class Komponenta : Artikal
     {
         /// <summary>
         /// Representing empty constructor
@@ -36,7 +35,7 @@ namespace Prodavnica_Racunara.Models
             Kategorija kategorija = listaKategorija.Where(x => x.Sifra == Convert.ToInt32(podaci[6])).FirstOrDefault();
             Kategorija = kategorija;
         }
-        
+
         /// <summary>
         /// Representing category of the class
         /// </summary>

@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Prodavnica_Racunara.Enums
+﻿namespace Prodavnica_Racunara.Enums
 {
-    enum Status
+    /// <summary>
+    /// Representing enum status
+    /// </summary>
+    public enum Status
     {
+        /// <summary>
+        /// Representing enum option active
+        /// </summary>
         Aktivan,
+
+        /// <summary>
+        /// Representing enum option deleted
+        /// </summary>
         Obrisan
     }
 }

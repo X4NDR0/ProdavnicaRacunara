@@ -1,5 +1,4 @@
 ﻿using Prodavnica_Racunara.Enums;
-using Prodavnica_Racunara.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing class Procesor which inherits class component
     /// </summary>
-    class Procesor : Komponenta
+    public class Procesor : Komponenta
     {
         /// <summary>
         /// Representing empty class constructor

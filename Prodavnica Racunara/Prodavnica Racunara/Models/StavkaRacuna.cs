@@ -7,7 +7,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing class
     /// </summary>
-    class StavkaRacuna
+    public class StavkaRacuna
     {
         /// <summary>
         /// Representing class with the parametars

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Prodavnica_Racunara.Utils
 {
@@ -23,6 +21,11 @@ namespace Prodavnica_Racunara.Utils
         /// Representing ID of the "stavke racuna"
         /// </summary>
         public static int IDStavkeRacuna;
+
+        /// <summary>
+        /// Representing ID of the selled artical
+        /// </summary>
+        public static int IDKupljenogArtikla;
 
         /// <summary>
         /// Representing method which check if input is int
@@ -61,7 +64,6 @@ namespace Prodavnica_Racunara.Utils
             string text = string.Empty;
             while (text.Equals(""))
             {
-                Console.Write("Wrong input try again:");
                 text = Console.ReadLine();
             }
             return text;
@@ -74,7 +76,7 @@ namespace Prodavnica_Racunara.Utils
         public static DateTime ProveraVremena()
         {
             DateTime vreme;
-            while (DateTime.TryParse(Console.ReadLine(),out vreme))
+            while (DateTime.TryParse(Console.ReadLine(), out vreme))
             {
                 Console.Write("Wrong input try again:");
             }

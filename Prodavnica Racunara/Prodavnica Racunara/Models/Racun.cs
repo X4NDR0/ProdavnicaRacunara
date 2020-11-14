@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing class racun
     /// </summary>
-    class Racun
+    public class Racun
     {
         /// <summary>
         /// Representing class constructor of the class 

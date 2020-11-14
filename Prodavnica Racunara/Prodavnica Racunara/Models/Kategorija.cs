@@ -3,7 +3,7 @@
     /// <summary>
     /// Representing class category
     /// </summary>
-    class Kategorija
+    public class Kategorija
     {
         /// <summary>
         /// Empty class constructor

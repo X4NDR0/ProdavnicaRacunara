@@ -1,5 +1,4 @@
 ﻿using Prodavnica_Racunara.Enums;
-using Prodavnica_Racunara.Utils;
 using System;
 
 namespace Prodavnica_Racunara.Models
@@ -7,7 +6,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing "Artical" class
     /// </summary>
-    class Artikal
+    public class Artikal
     {
         /// <summary>
         /// Representing empty constructor of the class
@@ -31,7 +30,7 @@ namespace Prodavnica_Racunara.Models
             }
             else
             {
-                
+
                 int.TryParse(podaci[0], out Sifra);
                 Naziv = podaci[1];
                 double.TryParse(podaci[2], out Cena);
@@ -77,7 +76,7 @@ namespace Prodavnica_Racunara.Models
         /// <returns></returns>
         public virtual string Save()
         {
-            string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina  + ";" + Opis + ";" + Status.ToString();
+            string data = Sifra + ";" + Naziv + ";" + Cena + ";" + Kolicina + ";" + Opis + ";" + Status.ToString();
             return data;
         }
     }

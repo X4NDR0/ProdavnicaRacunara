@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing class "KupljeniArtikal"
     /// </summary>
-    class KupljeniArtikal
+    public class KupljeniArtikal
     {
         /// <summary>
         /// Representing emtpy constructor of the class
@@ -23,7 +22,7 @@ namespace Prodavnica_Racunara.Models
         /// </summary>
         /// <param name="data"></param>
         /// <param name="listaArtikal"></param>
-        public KupljeniArtikal(string data,List<Artikal> listaArtikal)
+        public KupljeniArtikal(string data, List<Artikal> listaArtikal)
         {
             string[] podaci = data.Split(';');
             int.TryParse(podaci[0], out ID);

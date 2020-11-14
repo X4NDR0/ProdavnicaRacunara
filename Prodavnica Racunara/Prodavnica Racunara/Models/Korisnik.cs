@@ -6,7 +6,7 @@ namespace Prodavnica_Racunara.Models
     /// <summary>
     /// Representing class
     /// </summary>
-    class Korisnik
+    public class Korisnik
     {
         /// <summary>
         /// Representing constructor with parametars
